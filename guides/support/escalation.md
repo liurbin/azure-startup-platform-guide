@@ -47,4 +47,4 @@ Track request status and the next responsible party. After approval/fix, revisit
 
 ## Scenario coverage
 
-S07-Q6, S09-Q6, S10-Q3, S10-Q4
+S07-Q6, S09-Q6, S10-Q3, S10-Q4, S13-Q4

@@ -45,4 +45,4 @@ After customer action, verify offer/order status, exact billed subscription and 
 
 ## Scenario coverage
 
-S02-Q2, S05-Q5
+S02-Q2, S05-Q5, S13-Q5

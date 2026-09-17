@@ -12,7 +12,8 @@
     {"id": "S07", "description": "德国柏林：12人企业文档AI团队"},
     {"id": "S08", "description": "印度班加罗尔：2人教育应用，角色兼任"},
     {"id": "S09", "description": "以色列特拉维夫：25人安全SaaS"},
-    {"id": "S10", "description": "巴西圣保罗：7人实时语音团队"}
+    {"id": "S10", "description": "巴西圣保罗：7人实时语音团队"},
+    {"id": "S13", "description": "Compliance and customer due diligence: fictional cross-startup questions", "question_ids": ["S13-Q1", "S13-Q2", "S13-Q3", "S13-Q4", "S13-Q5"]}
   ],
   "scenarios": [
     {"id": "S01-Q1", "startup": "S01", "role": "创始人", "question": "Credits 从哪里激活，怎么确认绑定的是公司要用的订阅？", "baseline_status": "explicit", "guides": ["credits"]},
@@ -74,6 +75,11 @@
     {"id": "S10-Q3", "startup": "S10", "role": "平台工程师", "question": "持续限流是自身分配不足还是平台容量问题，什么证据决定升级给支持？", "baseline_status": "explicit", "guides": ["model-usage", "support"]},
     {"id": "S10-Q4", "startup": "S10", "role": "平台工程师", "question": "收到警告时怎样区分服务健康、内容控制和账户层通知？", "baseline_status": "explicit", "guides": ["model-notifications", "support"]},
     {"id": "S10-Q5", "startup": "S10", "role": "模型服务负责人", "question": "录音存储的保留、备份策略和删除后保留项，怎样在平台上核实？", "baseline_status": "explicit", "guides": ["data-retention"]},
-    {"id": "S10-Q6", "startup": "S10", "role": "模型服务负责人", "question": "版本升级或退役通知是否影响当前部署，谁能操作，什么时候必须处理？", "baseline_status": "explicit", "guides": ["model-notifications"]}
+    {"id": "S10-Q6", "startup": "S10", "role": "模型服务负责人", "question": "版本升级或退役通知是否影响当前部署，谁能操作，什么时候必须处理？", "baseline_status": "explicit", "guides": ["model-notifications"]},
+    {"id": "S13-Q1", "startup": "S13", "role": "Founder, 6-person legal-AI startup", "question": "A hospital customer says we must sign a BAA with Microsoft before their pilot. Where is it and who signs?", "baseline_status": null, "guides": ["compliance-terms", "permissions"]},
+    {"id": "S13-Q2", "startup": "S13", "role": "Compliance lead, Series A health-tech", "question": "A security questionnaire asks for 'your cloud provider's DPA and sub-processor list'. What do we send?", "baseline_status": null, "guides": ["compliance-terms", "audit"]},
+    {"id": "S13-Q3", "startup": "S13", "role": "Platform engineer, regulated fintech", "question": "Is the model we deployed on a Global Standard deployment inside HIPAA / EU data-residency scope, or do we need a Data Zone deployment?", "baseline_status": null, "guides": ["compliance-terms", "model-availability", "model-quota"]},
+    {"id": "S13-Q4", "startup": "S13", "role": "CTO, seed-stage", "question": "Investor diligence wants our SOC 2 / ISO evidence for the Azure services we use. Can I download reports and put them in the data room?", "baseline_status": null, "guides": ["compliance-terms", "support"]},
+    {"id": "S13-Q5", "startup": "S13", "role": "Founder", "question": "The Marketplace model we bought - is it covered by Microsoft's DPA or the seller's terms?", "baseline_status": null, "guides": ["compliance-terms", "marketplace-invoices"]}
   ]
 }

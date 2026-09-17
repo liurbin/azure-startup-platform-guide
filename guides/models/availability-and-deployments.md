@@ -48,4 +48,4 @@ Verify the actual model/version/type/location and successful provisioning after 
 
 ## Scenario coverage
 
-S06-Q2, S07-Q1, S10-Q1, S10-Q2
+S06-Q2, S07-Q1, S10-Q1, S10-Q2, S13-Q3
