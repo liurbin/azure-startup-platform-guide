@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import date, timedelta
 import json
 import re
 import shutil
@@ -37,7 +38,11 @@ class DocumentationValidationTests(unittest.TestCase):
 
     def test_missing_question_fails(self):
         self.change_json("tests/scenarios.json", lambda data: data["scenarios"].pop())
-        self.assertTrue(any("60 unique" in error for error in validate(self.fixture)))
+        self.assertTrue(any("registered scenario IDs" in error for error in validate(self.fixture)))
+
+    def test_original_baseline_question_cannot_be_removed(self):
+        self.change_json("tests/scenarios.json", lambda data: data["scenarios"].pop(0))
+        self.assertTrue(any("original 60 baseline" in error for error in validate(self.fixture)))
 
     def test_unknown_guide_fails(self):
         self.change_json("tests/scenarios.json", lambda data: data["scenarios"][0]["guides"].append("unknown-guide"))
@@ -78,7 +83,7 @@ class DocumentationValidationTests(unittest.TestCase):
         self.change_json("tests/scenarios.json", lambda data: data["startups"][0].update(id=[]))
         self.change_json("tests/scenarios.json", lambda data: data["scenarios"][0].update(baseline_status=[]))
         errors = validate(self.fixture)
-        self.assertTrue(any("ten fictional startups" in error for error in errors))
+        self.assertTrue(any("baseline startup profiles" in error for error in errors))
         self.assertTrue(any("invalid baseline status" in error for error in errors))
 
     def test_each_guide_requires_corresponding_azure_website(self):
@@ -92,6 +97,130 @@ class DocumentationValidationTests(unittest.TestCase):
         text = re.sub(r"### Technical documentation\n.*?(?=## Scenario coverage)", "", path.read_text(encoding="utf-8"), flags=re.DOTALL)
         path.write_text(text, encoding="utf-8")
         self.assertTrue(any("missing corresponding Technical documentation" in error for error in validate(self.fixture)))
+
+    def test_extension_group_with_one_question_and_one_role_passes(self):
+        def add_extension(data):
+            data["startups"].append({"id": "S14", "description": "Synthetic extension fixture", "question_ids": ["S14-Q1"]})
+            data["scenarios"].append({
+                "id": "S14-Q1", "startup": "S14", "role": "Reviewer",
+                "question": "Where is the existing support request status?",
+                "baseline_status": None, "guides": ["support"],
+            })
+        self.change_json("tests/scenarios.json", add_extension)
+        path = self.fixture / "guides/support/escalation.md"
+        path.write_text(path.read_text(encoding="utf-8").rstrip() + ", S14-Q1\n", encoding="utf-8")
+        self.assertEqual(validate(self.fixture), [])
+
+    def test_extension_must_register_expected_question_ids(self):
+        self.change_json("tests/scenarios.json", lambda data: data["startups"][-1].pop("question_ids"))
+        self.assertTrue(any("declare expected question_ids" in error for error in validate(self.fixture)))
+
+    def test_unregistered_question_cannot_be_added(self):
+        def add_question(data):
+            data["scenarios"].append({
+                "id": "S13-Q6", "startup": "S13", "role": "Reviewer",
+                "question": "An unregistered question.", "baseline_status": None, "guides": ["support"],
+            })
+        self.change_json("tests/scenarios.json", add_question)
+        self.assertTrue(any("registered scenario IDs" in error for error in validate(self.fixture)))
+
+    def test_duplicate_registered_question_fails(self):
+        self.change_json("tests/scenarios.json", lambda data: data["startups"][-1]["question_ids"].append("S13-Q1"))
+        self.assertTrue(any("duplicate or mismatched registered question" in error for error in validate(self.fixture)))
+
+    def test_new_question_does_not_rewrite_baseline_statistics(self):
+        self.change_json("tests/scenarios.json", lambda data: data["scenarios"][-1].update(baseline_status="explicit"))
+        errors = validate(self.fixture)
+        self.assertTrue(any("extension question must use baseline_status null" in error for error in errors))
+        self.assertFalse(any("baseline counts changed" in error for error in errors))
+
+    def test_original_baseline_statistics_still_protected(self):
+        self.change_json("tests/scenarios.json", lambda data: data["scenarios"][0].update(baseline_status="missing"))
+        self.assertTrue(any("baseline counts changed" in error for error in validate(self.fixture)))
+
+    def test_unknown_guide_status_is_rejected(self):
+        self.change_json("catalog.json", lambda data: data["modules"][0].update(status="approved"))
+        self.assertTrue(any("missing or invalid guide status" in error for error in validate(self.fixture)))
+
+    def test_missing_guide_status_is_not_silently_assumed(self):
+        self.change_json("catalog.json", lambda data: data["modules"][0].pop("status"))
+        self.assertTrue(any("missing or invalid guide status" in error for error in validate(self.fixture)))
+
+    def test_catalog_and_header_status_must_match(self):
+        self.change_json("catalog.json", lambda data: data["modules"][0].update(status="draft"))
+        self.assertTrue(any("catalog and guide status differ" in error for error in validate(self.fixture)))
+
+    def test_draft_cannot_claim_a_review_date(self):
+        path = self.fixture / "guides/accounts/costs.md"
+        path.write_text(path.read_text(encoding="utf-8").replace("[set on review]", date.today().isoformat()), encoding="utf-8")
+        self.assertTrue(any("draft must keep the pending review date" in error for error in validate(self.fixture)))
+
+    def test_draft_must_explicitly_prohibit_execution(self):
+        path = self.fixture / "guides/accounts/costs.md"
+        path.write_text(path.read_text(encoding="utf-8").replace("Do not execute", "Execute"), encoding="utf-8")
+        self.assertTrue(any("draft scope" in error for error in validate(self.fixture)))
+
+    def test_reviewed_guide_requires_real_date(self):
+        path = self.fixture / "guides/accounts/credits.md"
+        path.write_text(path.read_text(encoding="utf-8").replace("Policy checked: 2026-09-17.", "Policy checked: [set on review]."), encoding="utf-8")
+        self.assertTrue(any("real nonfuture ISO" in error for error in validate(self.fixture)))
+
+    def test_reviewed_guide_date_is_independent_of_catalog_baseline(self):
+        path = self.fixture / "guides/accounts/credits.md"
+        path.write_text(path.read_text(encoding="utf-8").replace("Policy checked: 2026-09-17.", "Policy checked: 2026-09-16."), encoding="utf-8")
+        self.assertEqual(validate(self.fixture), [])
+
+    def test_future_review_date_is_rejected(self):
+        path = self.fixture / "guides/accounts/credits.md"
+        future = (date.today() + timedelta(days=1)).isoformat()
+        path.write_text(path.read_text(encoding="utf-8").replace("Policy checked: 2026-09-17.", f"Policy checked: {future}."), encoding="utf-8")
+        self.assertTrue(any("real nonfuture ISO" in error for error in validate(self.fixture)))
+
+    def test_reviewed_guide_cannot_hide_unresolved_review_comments(self):
+        path = self.fixture / "guides/accounts/credits.md"
+        path.write_text(path.read_text(encoding="utf-8") + "\n<!-- REVIEW: Synthetic unresolved issue. -->\n", encoding="utf-8")
+        self.assertTrue(any("unresolved REVIEW comments require draft" in error for error in validate(self.fixture)))
+
+    def make_tenant_tested_fixture(self):
+        self.change_json("catalog.json", lambda data: data["modules"][0].update(status="tenant-tested"))
+        path = self.fixture / "guides/shared/context-and-tools.md"
+        text = path.read_text(encoding="utf-8").replace("Status: source-reviewed; not tenant-tested.", "Status: tenant-tested; scoped evidence recorded.")
+        path.write_text(text, encoding="utf-8")
+
+    def test_tenant_tested_needs_evidence_metadata(self):
+        self.make_tenant_tested_fixture()
+        self.assertTrue(any("needs scoped evidence metadata" in error for error in validate(self.fixture)))
+
+    def test_tenant_tested_accepts_complete_synthetic_evidence_shape(self):
+        self.make_tenant_tested_fixture()
+        path = self.fixture / "reference/tenant-tests/schema-fixture.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("Synthetic schema test only. No real tenant was tested.\n", encoding="utf-8")
+        self.change_json("catalog.json", lambda data: data["modules"][0].update(tenant_test={
+            "tested_on": date.today().isoformat(), "scope": "synthetic-format-fixture",
+            "evidence": "reference/tenant-tests/schema-fixture.md",
+        }))
+        self.assertEqual(validate(self.fixture), [])
+
+    def test_tenant_evidence_cannot_point_to_private_runtime_data(self):
+        self.make_tenant_tested_fixture()
+        self.change_json("catalog.json", lambda data: data["modules"][0].update(tenant_test={
+            "tested_on": date.today().isoformat(), "scope": "synthetic-format-fixture",
+            "evidence": ".local/private.json",
+        }))
+        self.assertTrue(any("sanitized record under reference/tenant-tests" in error for error in validate(self.fixture)))
+
+    def test_only_exact_additional_official_hosts_are_allowed(self):
+        path = self.fixture / "guides/accounts/compliance-terms.md"
+        text = path.read_text(encoding="utf-8").replace("https://www.microsoft.com/", "https://www.microsoft.com.example.invalid/")
+        path.write_text(text, encoding="utf-8")
+        self.assertTrue(any("unapproved reference URL" in error for error in validate(self.fixture)))
+
+    def test_quota_guide_retains_concrete_tier_lookup(self):
+        text = (self.fixture / "guides/models/quotas-tiers-and-capacity.md").read_text(encoding="utf-8")
+        for expected in ("az rest --method get", "providers/Microsoft.CognitiveServices/quotaTiers", "currentTierName", "assignmentDate", "tierUpgradePolicy"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, text)
 
 
 if __name__ == "__main__":

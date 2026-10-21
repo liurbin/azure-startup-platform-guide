@@ -2,6 +2,8 @@
 
 Use this shape for human reports or JSON; do not invent live values in reference mode.
 
+Guide maturity and result `status` are separate. A selected `draft` guide can only yield `mode: reference` and `status: reference_only`, without customer-query findings. A reviewed or tested guide still needs the customer's scoped authorization; its maturity alone is not an execution result.
+
 | Field | Required meaning |
 |---|---|
 | `mode` | `reference` or `authorized_read_only`; an approved change needs a separate operation record |

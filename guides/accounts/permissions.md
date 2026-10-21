@@ -45,4 +45,4 @@ Recheck effective access as the intended principal, including any activation/pro
 
 ## Scenario coverage
 
-S01-Q6, S08-Q5, S09-Q1
+S01-Q6, S08-Q5, S09-Q1, S13-Q1

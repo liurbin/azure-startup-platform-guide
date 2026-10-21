@@ -44,4 +44,4 @@ Verify collection status with an existing permitted event; creating a new test e
 
 ## Scenario coverage
 
-S05-Q6, S07-Q4
+S05-Q6, S07-Q4, S13-Q2
