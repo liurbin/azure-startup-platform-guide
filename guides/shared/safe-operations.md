@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Preview changes to existing resources; Recover a partial operation without deleting unrelated resources |
+| Reader | Platform operators and change approvers |
+| Applies to | Azure resource changes; ARM/Bicep preview and operation records |
+| Prepare | Exact resource scope and desired delta; Cost, ownership and recovery constraints |
+| You will get | A scoped change/approval plan and an evidence-based recovery or verification handoff. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only until explicit approval is obtained for a separate change. No secrets or customer exports in Git.
@@ -38,6 +52,18 @@ Obtain approval for the resource list and deltas, cost exposure, irreversible ac
 ## Verification and escalation
 
 Inspect actual after-state. Following partial failure, classify each resource as pre-existing, created by this operation, modified, or uncertain. Resume only a known-safe pending step. Cleanup requires an exact approved ID list and dependency/retention checks; never delete an entire shared resource group. Report unresolved remnants and ongoing charges. Do not promise automatic rollback of identity, billing, or data changes.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](context-and-tools.md)
+
+**Related tasks:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Platform changes, audit coverage and retention](../network/audit.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

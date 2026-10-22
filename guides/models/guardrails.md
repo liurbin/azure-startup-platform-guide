@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Inspect which guardrail is actually associated with a deployment; Distinguish configurable controls from approval-required modifications |
+| Reader | Platform operators and authorized safety/compliance owners |
+| Applies to | Foundry model/agent guardrails; Separate modified-guardrail and abuse-monitoring application routes |
+| Prepare | Cloud, resource generation and deployment/agent; Requested behavior and permitted read/change scope |
+| You will get | An effective-control/assignment finding and a legitimate approval or support route. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No customer prompts, safety test content, tokens or secrets in Git. Control changes and applications require the authorized owner's approval.
@@ -30,6 +44,18 @@ After documented approval, compare its scope and conditions with the intended re
 ## Verification and escalation
 
 Reopen configuration and assignments after an approved change. Record approval reference, applied scope and state. A benign behavior check needs separate consent and cannot prove every guardrail path. Send unexpected compliance notices to the designated support/review channel; do not suppress the notice.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Platform changes, audit coverage and retention](../network/audit.md); [Warnings, version changes and retirement](notifications.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

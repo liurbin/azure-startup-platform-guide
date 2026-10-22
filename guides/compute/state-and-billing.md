@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Explain VM stop/deallocation state and residual charges; Classify a platform interruption using existing evidence |
+| Reader | Compute operators and authorized finance investigators |
+| Applies to | Azure VM and scale-set instances; Attached-resource and commitment billing |
+| Prepare | Exact instances, priority and attached-resource scope; Billing period and UTC incident interval |
+| You will get | A state/charge breakdown and a supported interruption or approved-transition handoff. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No raw logs or secrets in Git. Stop, deallocate, delete, resize and cleanup operations require explicit approval.
@@ -32,6 +46,18 @@ Explain state transition, availability/data impact, retained resources and recov
 ## Verification and escalation
 
 After an approved transition, reread actual state and inspect remaining resources. Later cost records may still reflect earlier use; compare the operation timestamp with the meter period. Escalate unresolved charges or platform interruptions using sanitized state and event evidence.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [GPU quota, restrictions and allocation](gpu-capacity.md); [Cost visibility, allocation and spending controls](../accounts/costs.md); [PostgreSQL and Blob Storage: backups and retained data](../data/backup-and-retention.md)
+
+**If blocked:** [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

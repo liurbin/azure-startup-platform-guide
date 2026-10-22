@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Check GitHub-to-Azure federation or credential lifecycle; Plan a departing person's access and ownership handoff |
+| Reader | Identity/platform administrators and ownership approvers |
+| Applies to | GitHub Actions OIDC and Azure authorization; Azure identity, billing ownership and directory transfer boundaries |
+| Prepare | Automation or ownership-handoff task; Principal/workflow, current scope and intended owner |
+| You will get | A scoped identity/access inventory and an approved-owner transition checklist. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No credentials, invoices, identity exports or customer secrets in Git. Federation, rotation, revocation and ownership changes need separate approval.
@@ -31,6 +45,18 @@ Ownership/tenant transfers need the billing and directory owners, an access-recr
 ## Verification and escalation
 
 Check the intended workflow's least-privilege access and the revoked principal's access through approved tests. For handoffs, verify both billing and resource ownership and dependent service identities. Missing transfer support or unclear effects are blockers for billing/directory support.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Resource, data-plane and billing permissions](permissions.md); [Foundry model access security and credential containment](../models/access-security.md)
+
+**If blocked:** [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

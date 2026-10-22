@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Separate DNS/network refusal from identity failures; Inspect private endpoint approval or organizational policy denial |
+| Reader | Network/platform operators and governance owners |
+| Applies to | Azure resource connectivity; Private Link, DNS and Azure Policy evidence |
+| Prepare | Approved source network and destination endpoint; Cloud, permitted path and sanitized error/operation reference |
+| You will get | A supported failure classification and scoped owner action without bypassing isolation. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No secrets, packet payloads or private configuration exports in Git. DNS, network, identity, endpoint approvals and policy exemptions need explicit approval.
@@ -30,6 +44,18 @@ Propose minimal, scoped DNS/network/role changes. Policy exceptions go to the go
 ## Verification and escalation
 
 From the approved network and identity, repeat the specific permitted connectivity/read check. Confirm actual endpoint approval and effective policy. Preserve sanitized operation/assignment IDs and timestamps for support. Application protocol or code defects are handed back explicitly.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Platform changes, audit coverage and retention](audit.md)
+
+**If blocked:** [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

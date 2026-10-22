@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Find activation, binding, remaining credits or expiry; Check whether the actual offer covers a model purchase |
+| Reader | Founders, finance owners and authorized benefit owners |
+| Applies to | Microsoft for Startups/Azure credit offers; Offer-specific benefit and billing views |
+| Prepare | Cloud, program/offer and joining date; Intended account and subscription; authorization for live values |
+| You will get | A benefit/binding checklist with separately sourced balance, validity and unresolved eligibility. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No payment details, referral codes, identity documents, or customer exports in Git. Activation and commercial acceptance require explicit customer approval and action.
@@ -31,6 +45,18 @@ Prepare a checklist only. The customer signs in, supplies personal/payment infor
 ## Verification and escalation
 
 Reopen the benefit and billing views; confirm the intended binding, status and actual balance. An activation click alone is not proof. Hand off conflicting offer/account states to program support with sanitized status and reference IDs; billing discrepancies go to billing support.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Cost visibility, allocation and spending controls](costs.md); [Marketplace acquisition and invoice access](marketplace-and-invoices.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

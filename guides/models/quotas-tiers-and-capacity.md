@@ -4,6 +4,20 @@ Policy checked: [set on review]. Status: draft; sources not re-verified; not ten
 
 Previous source-reviewed baseline: 2026-09-17. Existing policy text and the tier-query example are retained; additions and conflicts require human source review.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Inspect a model quota tier or allocation; Separate quota approval, deployment capacity and runtime throttling |
+| Reader | Model platform operators and quota-request owners |
+| Applies to | Global Azure OpenAI/Foundry model quota; Model/version/deployment-specific tier and capacity surfaces |
+| Prepare | Subscription, model/version/type and region/data zone; Requested units or incident interval and sanitized error |
+| You will get | Separate tier, allowance, allocation and capacity findings with their evidence and unknowns. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference only while draft. Do not execute the read-only checks or changes below until source review and explicit customer authorization. No tokens or customer exports in Git. Quota allocation, upgrade-policy changes and applications require approval.
@@ -78,6 +92,20 @@ After approval, reread the corresponding limit and deployment allocation. Check 
 Close the requested check only when its evidence exists: tier questions require a tier observation; allocation requests require the matching updated allocation; a runtime incident requires evidence from an appropriate subsequent interval. Do not substitute one for another.
 
 For support, include sanitized scope, model/version/type, requested units, actual settings, UTC interval, error/request IDs and the approval reference. Keep customer identifiers in the customer's private evidence bundle.
+
+The [draft source-check packet](../../reference/source-review.md) records the public quota-scope/API comparison and remaining human decisions. No live tier query was performed and this guide remains draft.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Available models and deployment options](availability-and-deployments.md); [Model usage, costs and rate limiting](usage-and-throttling.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

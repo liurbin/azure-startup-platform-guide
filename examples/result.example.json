@@ -13,18 +13,18 @@
   "findings": [],
   "unknowns": [
     {
-      "field": "current_quota_tier",
+      "field": "confirmed_cloud_and_subscription",
       "reason": "Fictional reference-only example; no customer subscription was queried.",
-      "obtain": "Confirm cloud and subscription, then use the authorized tier query in the relevant guide."
+      "obtain": "Ask the authorized owner to confirm the intended cloud and target scope; use the reviewed context guide only after scoped authorization."
     }
   ],
   "next_actions": [
     {
-      "target": "customer-selected subscription",
-      "action": "Inspect the current tier using a permitted read-only path.",
+      "target": "customer-selected cloud and resource scope",
+      "action": "Confirm the target and permitted mode before any live context inspection.",
       "responsible_role": "Authorized platform operator",
       "approval_required": "Customer authorization to read this scope",
-      "success_evidence": "Timestamped tier response for the confirmed subscription"
+      "success_evidence": "Confirmed target and authorization; a timestamped context observation only if separately performed"
     }
   ]
 }

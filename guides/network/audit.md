@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Find who changed a platform setting or role; Inspect existing audit capture, access and retention gaps |
+| Reader | Authorized platform, security and evidence owners |
+| Applies to | Azure control-plane Activity Log; Separate service/data-plane and Entra audit surfaces |
+| Prepare | Exact resource/scope, operation and UTC interval; Authorized evidence recipient and permitted existing logs |
+| You will get | A private evidence timeline with provenance, effective-state limits and capture gaps. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No raw audit exports, personal identities or secrets in Git. Enabling export or changing retention requires approval.
@@ -29,6 +43,18 @@ Propose required categories, approved destination, access restrictions, retentio
 ## Verification and escalation
 
 Verify collection status with an existing permitted event; creating a new test event/change needs separate consent. Deliver an evidence timeline with provenance and gaps. Preserve original private evidence through the customer's approved process, not a public issue or unapproved LLM upload.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Foundry request auditing and safe LLM logs](../models/audit-and-llm-logs.md); [Resource, data-plane and billing permissions](../accounts/permissions.md); [Preview, approve and recover resource changes](../shared/safe-operations.md)
+
+**If blocked:** [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

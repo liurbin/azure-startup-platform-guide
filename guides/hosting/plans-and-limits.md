@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Inspect hosting replicas, plan constraints or idle charges; Separate an app setting from environment quota and capacity |
+| Reader | Container Apps operators and authorized cost owners |
+| Applies to | Azure Container Apps only; Other hosts require their own service documentation |
+| Prepare | Selected app/environment, region and workload profile; Requested limit or aligned billing/metric interval |
+| You will get | A plan/settings/observed-state comparison with attributable costs and supported next steps. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No configuration secrets or customer exports in Git. Plan, scaling, diagnostic and resource changes need approval.
@@ -29,6 +43,18 @@ Present proposed minimum/maximum replicas, profile/plan changes, effects on avai
 ## Verification and escalation
 
 Confirm saved settings, actual platform state and the applicable quota after a change. Inspect costs for a later aligned period; do not claim immediate invoice reconciliation. Escalate unexplained allocation failures with environment/profile/replica evidence.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Container Apps: deployment access and domains](deployment-and-domains.md); [Cost visibility, allocation and spending controls](../accounts/costs.md)
+
+**If blocked:** [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

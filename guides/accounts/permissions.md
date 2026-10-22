@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Separate model invocation, deployment and billing access; Identify the narrow missing permission without defaulting to Owner |
+| Reader | Platform administrators and authorized resource or finance users |
+| Applies to | Azure resource and data-plane roles; Microsoft Entra and billing-role boundaries |
+| Prepare | Intended principal and operation; Exact resource or billing scope and sanitized failure |
+| You will get | An operation-to-scope permission matrix and a least-privilege administrator request. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No directory exports, keys or customer identities in Git. Role changes require approval.
@@ -29,6 +43,18 @@ Give the responsible administrator the exact principal, scope, action and propos
 ## Verification and escalation
 
 Recheck effective access as the intended principal, including any activation/propagation state. Validate the requested operation without creating a resource or sending a billable model request unless separately authorized. A recorded role assignment alone is not conclusive proof of usable access.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Federation, credential lifecycle and ownership](identity-lifecycle.md); [Foundry model access security and credential containment](../models/access-security.md)
+
+**If blocked:** [Private endpoints, DNS, access and policy denials](../network/connectivity-and-policy.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

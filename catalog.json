@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "version": "0.2.0-draft",
   "reviewed_on": "2026-09-17",
   "verification": "Mixed maturity: use each module's status and guide header. reviewed_on records the original source baseline, not a review of draft additions. No tenant operations were performed.",
@@ -9,28 +9,265 @@
     "AzureChinaCloud": "Context identification only. Stop before reusing global service or benefit procedures."
   },
   "modules": [
-    {"id": "context", "area": "shared", "title": "Cloud context, tools and provider registration", "path": "guides/shared/context-and-tools.md", "status": "source-reviewed"},
-    {"id": "safe-operations", "area": "shared", "title": "Preview, approve and recover resource changes", "path": "guides/shared/safe-operations.md", "status": "source-reviewed"},
-    {"id": "credits", "area": "accounts", "title": "Startup credits, binding and expiry", "path": "guides/accounts/credits.md", "status": "source-reviewed"},
-    {"id": "compliance-terms", "area": "accounts", "title": "Contract and compliance evidence: where to look and who decides", "path": "guides/accounts/compliance-terms.md", "status": "draft"},
-    {"id": "costs", "area": "accounts", "title": "Cost visibility, allocation and spending controls", "path": "guides/accounts/costs.md", "status": "draft"},
-    {"id": "marketplace-invoices", "area": "accounts", "title": "Marketplace acquisition and invoice access", "path": "guides/accounts/marketplace-and-invoices.md", "status": "source-reviewed"},
-    {"id": "permissions", "area": "accounts", "title": "Resource, data-plane and billing permissions", "path": "guides/accounts/permissions.md", "status": "source-reviewed"},
-    {"id": "identity-lifecycle", "area": "accounts", "title": "Federation, credential lifecycle and ownership", "path": "guides/accounts/identity-lifecycle.md", "status": "source-reviewed"},
-    {"id": "model-quota", "area": "models", "title": "Current tier, quota allocation and capacity", "path": "guides/models/quotas-tiers-and-capacity.md", "status": "draft"},
-    {"id": "model-availability", "area": "models", "title": "Available models and deployment options", "path": "guides/models/availability-and-deployments.md", "status": "source-reviewed"},
-    {"id": "model-usage", "area": "models", "title": "Model usage, costs and rate limiting", "path": "guides/models/usage-and-throttling.md", "status": "source-reviewed"},
-    {"id": "guardrails", "area": "models", "title": "Effective guardrails and modification applications", "path": "guides/models/guardrails.md", "status": "source-reviewed"},
-    {"id": "model-notifications", "area": "models", "title": "Warnings, version changes and retirement", "path": "guides/models/notifications.md", "status": "source-reviewed"},
-    {"id": "gpu-capacity", "area": "compute", "title": "GPU quota, restrictions and allocation", "path": "guides/compute/gpu-capacity.md", "status": "source-reviewed"},
-    {"id": "compute-state", "area": "compute", "title": "Compute state, interruptions and billing", "path": "guides/compute/state-and-billing.md", "status": "source-reviewed"},
-    {"id": "hosting-limits", "area": "hosting", "title": "Hosting plans, quotas, replicas and idle costs", "path": "guides/hosting/plans-and-limits.md", "status": "source-reviewed"},
-    {"id": "hosting-deployment", "area": "hosting", "title": "Image access, deployment errors and domains", "path": "guides/hosting/deployment-and-domains.md", "status": "source-reviewed"},
-    {"id": "data-capacity", "area": "data", "title": "Database versions, limits and maintenance", "path": "guides/data/versions-and-capacity.md", "status": "source-reviewed"},
-    {"id": "storage-access", "area": "data", "title": "Storage access, request limits and costs", "path": "guides/data/storage-access-and-cost.md", "status": "source-reviewed"},
-    {"id": "data-retention", "area": "data", "title": "Backups, restore history and retained resources", "path": "guides/data/backup-and-retention.md", "status": "source-reviewed"},
-    {"id": "connectivity-policy", "area": "network", "title": "Private endpoints, DNS, access and policy denials", "path": "guides/network/connectivity-and-policy.md", "status": "source-reviewed"},
-    {"id": "audit", "area": "network", "title": "Platform changes, audit coverage and retention", "path": "guides/network/audit.md", "status": "source-reviewed"},
-    {"id": "support", "area": "support", "title": "Support eligibility, warning routing and evidence", "path": "guides/support/escalation.md", "status": "source-reviewed"}
+    {
+      "id": "context", "area": "shared", "title": "Cloud context, tools and provider registration",
+      "path": "guides/shared/context-and-tools.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Confirm which cloud, tenant and subscription to use", "Identify missing tools or provider registration"],
+      "service_scope": ["Azure cloud context", "Azure China context identification only", "Azure Resource Manager"],
+      "audience": "Founders and authorized platform operators",
+      "required_inputs": ["Intended cloud and target scope", "Reference-only or explicitly authorized inspection"],
+      "expected_output": "A confirmed context/tool checklist, with mismatches and unknowns called out.",
+      "navigation": {"before": [], "related": ["permissions", "safe-operations", "credits"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "safe-operations", "area": "shared", "title": "Preview, approve and recover resource changes",
+      "path": "guides/shared/safe-operations.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Preview changes to existing resources", "Recover a partial operation without deleting unrelated resources"],
+      "service_scope": ["Azure resource changes", "ARM/Bicep preview and operation records"],
+      "audience": "Platform operators and change approvers",
+      "required_inputs": ["Exact resource scope and desired delta", "Cost, ownership and recovery constraints"],
+      "expected_output": "A scoped change/approval plan and an evidence-based recovery or verification handoff.",
+      "navigation": {"before": ["context"], "related": ["permissions", "audit"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "credits", "area": "accounts", "title": "Startup credits, binding and expiry",
+      "path": "guides/accounts/credits.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Find activation, binding, remaining credits or expiry", "Check whether the actual offer covers a model purchase"],
+      "service_scope": ["Microsoft for Startups/Azure credit offers", "Offer-specific benefit and billing views"],
+      "audience": "Founders, finance owners and authorized benefit owners",
+      "required_inputs": ["Cloud, program/offer and joining date", "Intended account and subscription; authorization for live values"],
+      "expected_output": "A benefit/binding checklist with separately sourced balance, validity and unresolved eligibility.",
+      "navigation": {"before": ["context"], "related": ["costs", "marketplace-invoices"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "compliance-terms", "area": "accounts", "title": "Contract and compliance evidence: where to look and who decides",
+      "path": "guides/accounts/compliance-terms.md", "status": "draft", "kind": "task",
+      "when_to_use": ["Locate provider DPA, BAA or regional contract evidence", "Route a customer or investor due-diligence request"],
+      "service_scope": ["Agreement-specific provider evidence", "Service/model scope and report access conditions"],
+      "audience": "Founders and customer legal, compliance or contract owners",
+      "required_inputs": ["Exact evidence request and agreement/channel", "Relevant service/model and responsible contract owner"],
+      "expected_output": "A private evidence index and owner questions, not a legal or compliance verdict.",
+      "navigation": {"before": ["context"], "related": ["model-availability", "audit"], "if_blocked": ["marketplace-invoices", "support"]}
+    },
+    {
+      "id": "costs", "area": "accounts", "title": "Cost visibility, allocation and spending controls",
+      "path": "guides/accounts/costs.md", "status": "draft", "kind": "task",
+      "when_to_use": ["Reconcile charges, credits or a spending spike", "Inspect allocation, budgets and cost-monitoring ownership"],
+      "service_scope": ["Microsoft Cost Management", "Agreement-specific billing and spending controls"],
+      "audience": "Finance/FinOps owners and authorized platform operators",
+      "required_inputs": ["Billing scope, agreement, currency and period", "Cost basis and requested comparison or control"],
+      "expected_output": "A scoped cost/credit reconciliation, allocation gaps and an owned alert/control proposal.",
+      "navigation": {"before": ["context"], "related": ["credits", "model-usage"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "marketplace-invoices", "area": "accounts", "title": "Marketplace acquisition and invoice access",
+      "path": "guides/accounts/marketplace-and-invoices.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Investigate a blocked Marketplace purchase or offer", "Find the right invoice or billing-document access route"],
+      "service_scope": ["Microsoft Marketplace", "Agreement-specific Azure invoices and billing roles"],
+      "audience": "Procurement, finance and authorized billing owners",
+      "required_inputs": ["Cloud, agreement and billing/subscription scope", "Seller/offer/plan or invoice period"],
+      "expected_output": "A classified acquisition/document blocker and the correct authorized-owner handoff.",
+      "navigation": {"before": ["context"], "related": ["credits", "costs", "compliance-terms"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "permissions", "area": "accounts", "title": "Resource, data-plane and billing permissions",
+      "path": "guides/accounts/permissions.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Separate model invocation, deployment and billing access", "Identify the narrow missing permission without defaulting to Owner"],
+      "service_scope": ["Azure resource and data-plane roles", "Microsoft Entra and billing-role boundaries"],
+      "audience": "Platform administrators and authorized resource or finance users",
+      "required_inputs": ["Intended principal and operation", "Exact resource or billing scope and sanitized failure"],
+      "expected_output": "An operation-to-scope permission matrix and a least-privilege administrator request.",
+      "navigation": {"before": ["context"], "related": ["identity-lifecycle", "model-access-security"], "if_blocked": ["connectivity-policy", "support"]}
+    },
+    {
+      "id": "identity-lifecycle", "area": "accounts", "title": "Federation, credential lifecycle and ownership",
+      "path": "guides/accounts/identity-lifecycle.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Check GitHub-to-Azure federation or credential lifecycle", "Plan a departing person's access and ownership handoff"],
+      "service_scope": ["GitHub Actions OIDC and Azure authorization", "Azure identity, billing ownership and directory transfer boundaries"],
+      "audience": "Identity/platform administrators and ownership approvers",
+      "required_inputs": ["Automation or ownership-handoff task", "Principal/workflow, current scope and intended owner"],
+      "expected_output": "A scoped identity/access inventory and an approved-owner transition checklist.",
+      "navigation": {"before": ["context"], "related": ["permissions", "model-access-security"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "model-quota", "area": "models", "title": "Current tier, quota allocation and capacity",
+      "path": "guides/models/quotas-tiers-and-capacity.md", "status": "draft", "kind": "task",
+      "when_to_use": ["Inspect a model quota tier or allocation", "Separate quota approval, deployment capacity and runtime throttling"],
+      "service_scope": ["Global Azure OpenAI/Foundry model quota", "Model/version/deployment-specific tier and capacity surfaces"],
+      "audience": "Model platform operators and quota-request owners",
+      "required_inputs": ["Subscription, model/version/type and region/data zone", "Requested units or incident interval and sanitized error"],
+      "expected_output": "Separate tier, allowance, allocation and capacity findings with their evidence and unknowns.",
+      "navigation": {"before": ["context"], "related": ["model-availability", "model-usage"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "model-availability", "area": "models", "title": "Available models and deployment options",
+      "path": "guides/models/availability-and-deployments.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Check whether a model/version can be used", "Compare supported deployment and processing-location choices"],
+      "service_scope": ["Microsoft Foundry model catalog and deployment choices", "New/classic resource-generation identification"],
+      "audience": "Founders, model platform owners and compliance reviewers",
+      "required_inputs": ["Cloud, resource generation and model/version", "Intended processing boundary and authorized subscription scope"],
+      "expected_output": "An evidence-backed candidate table separating availability, permission, terms, quota and capacity.",
+      "navigation": {"before": ["context"], "related": ["model-quota", "marketplace-invoices", "compliance-terms"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "model-usage", "area": "models", "title": "Model usage, costs and rate limiting",
+      "path": "guides/models/usage-and-throttling.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Explain model usage/cost differences or an unexpected charge", "Investigate 429s and effective runtime limits"],
+      "service_scope": ["Foundry model request/token metrics", "Deployment-specific billing and throttling evidence"],
+      "audience": "Model operators and authorized FinOps investigators",
+      "required_inputs": ["Deployment, model/version/type and endpoint", "UTC incident interval and aligned cost period"],
+      "expected_output": "A usage/cost/limit comparison with supported explanations, gaps and escalation evidence.",
+      "navigation": {"before": ["context"], "related": ["costs", "model-quota", "model-access-audit-costs"], "if_blocked": ["connectivity-policy", "support"]}
+    },
+    {
+      "id": "model-access-audit-costs", "area": "models", "title": "Foundry access, audit and cost-control overview",
+      "path": "guides/models/access-audit-and-cost-controls.md", "status": "draft", "kind": "overview",
+      "when_to_use": ["Choose a route for model access, audit/logging or cost monitoring", "Triage an unexplained model-cost increase without assuming key theft"],
+      "service_scope": ["Foundry model platform controls", "Routing to endpoint-specific task guides"],
+      "audience": "Founders and platform, security/data and FinOps owners",
+      "required_inputs": ["Question and intended outcome", "Known service/endpoint and desired reference or inspection mode"],
+      "expected_output": "A reading path, selected task owners and missing inputs; this overview does not authorize execution.",
+      "navigation": {"before": ["context"], "related": ["model-access-security", "model-audit-logging", "costs"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "model-access-security", "area": "models", "title": "Foundry model access security and credential containment",
+      "path": "guides/models/access-security.md", "status": "draft", "kind": "task",
+      "when_to_use": ["Inspect model identities, keys and network access", "Plan authorized containment or rotation after credible credential exposure"],
+      "service_scope": ["Foundry/Azure OpenAI model endpoint access", "Endpoint-supported Entra, resource-key and network controls"],
+      "audience": "Platform/identity administrators and incident owners",
+      "required_inputs": ["Exact endpoint/resource and approved consumers", "Authentication type, network path and exposure/incident interval if relevant"],
+      "expected_output": "An access-path inventory, scoped control gaps and an approval/verification plan without secret values.",
+      "navigation": {"before": ["context"], "related": ["permissions", "identity-lifecycle", "connectivity-policy"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "model-audit-logging", "area": "models", "title": "Foundry request auditing and safe LLM logs",
+      "path": "guides/models/audit-and-llm-logs.md", "status": "draft", "kind": "task",
+      "when_to_use": ["Establish model request and trace audit coverage", "Decide whether LLM content is collected and who may access or export it"],
+      "service_scope": ["Foundry model diagnostics and application/gateway telemetry", "Log Analytics access, query auditing and retention"],
+      "audience": "Security/data owners and authorized platform/log administrators",
+      "required_inputs": ["Resource/endpoint, UTC interval and audit purpose", "Existing telemetry destinations, approved readers and retention requirements"],
+      "expected_output": "A coverage/privacy matrix, evidence gaps and a minimal approved logging and access-control plan.",
+      "navigation": {"before": ["context"], "related": ["audit", "permissions", "costs"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "guardrails", "area": "models", "title": "Effective guardrails and modification applications",
+      "path": "guides/models/guardrails.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Inspect which guardrail is actually associated with a deployment", "Distinguish configurable controls from approval-required modifications"],
+      "service_scope": ["Foundry model/agent guardrails", "Separate modified-guardrail and abuse-monitoring application routes"],
+      "audience": "Platform operators and authorized safety/compliance owners",
+      "required_inputs": ["Cloud, resource generation and deployment/agent", "Requested behavior and permitted read/change scope"],
+      "expected_output": "An effective-control/assignment finding and a legitimate approval or support route.",
+      "navigation": {"before": ["context"], "related": ["audit", "model-notifications"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "model-notifications", "area": "models", "title": "Warnings, version changes and retirement",
+      "path": "guides/models/notifications.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Classify a model warning or retirement notice", "Identify affected deployments, owners and deadlines"],
+      "service_scope": ["Foundry model lifecycle notices", "Platform, billing and safety-notice routing"],
+      "audience": "Model platform owners and notice recipients",
+      "required_inputs": ["Sanitized notice, origin, timestamp and deadline", "Approved target deployment scope"],
+      "expected_output": "An affected/unaffected deployment list and an owner/deadline handoff with unresolved facts.",
+      "navigation": {"before": ["context"], "related": ["model-availability", "support"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "gpu-capacity", "area": "compute", "title": "GPU quota, restrictions and allocation",
+      "path": "guides/compute/gpu-capacity.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Check GPU VM eligibility and quota", "Investigate allocation failure despite approved quota"],
+      "service_scope": ["Azure VM GPU SKUs", "Regional/family quotas and allocation restrictions"],
+      "audience": "ML/platform operators and capacity-request owners",
+      "required_inputs": ["Cloud, subscription/offer, SKU/family and region/zone", "Quantity, priority and date needed or sanitized allocation error"],
+      "expected_output": "Separate SKU, quota and capacity findings and a correctly scoped request/escalation.",
+      "navigation": {"before": ["context"], "related": ["compute-state", "costs"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "compute-state", "area": "compute", "title": "Compute state, interruptions and billing",
+      "path": "guides/compute/state-and-billing.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Explain VM stop/deallocation state and residual charges", "Classify a platform interruption using existing evidence"],
+      "service_scope": ["Azure VM and scale-set instances", "Attached-resource and commitment billing"],
+      "audience": "Compute operators and authorized finance investigators",
+      "required_inputs": ["Exact instances, priority and attached-resource scope", "Billing period and UTC incident interval"],
+      "expected_output": "A state/charge breakdown and a supported interruption or approved-transition handoff.",
+      "navigation": {"before": ["context"], "related": ["gpu-capacity", "costs", "data-retention"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "hosting-limits", "area": "hosting", "title": "Container Apps: plans, limits and idle costs",
+      "path": "guides/hosting/plans-and-limits.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Inspect hosting replicas, plan constraints or idle charges", "Separate an app setting from environment quota and capacity"],
+      "service_scope": ["Azure Container Apps only", "Other hosts require their own service documentation"],
+      "audience": "Container Apps operators and authorized cost owners",
+      "required_inputs": ["Selected app/environment, region and workload profile", "Requested limit or aligned billing/metric interval"],
+      "expected_output": "A plan/settings/observed-state comparison with attributable costs and supported next steps.",
+      "navigation": {"before": ["context"], "related": ["hosting-deployment", "costs"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "hosting-deployment", "area": "hosting", "title": "Container Apps: deployment access and domains",
+      "path": "guides/hosting/deployment-and-domains.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Investigate a Container Apps deployment or image-pull failure", "Inspect hostname, DNS and certificate bindings"],
+      "service_scope": ["Azure Container Apps", "Selected registry, ingress and domain/certificate access paths"],
+      "audience": "Container Apps operators and domain/registry owners",
+      "required_inputs": ["Selected app/environment and deployment time", "Image reference or hostname and sanitized platform error"],
+      "expected_output": "A classified platform-access/binding finding and an exact owner/change or application handoff.",
+      "navigation": {"before": ["context"], "related": ["identity-lifecycle", "connectivity-policy", "hosting-limits"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "data-capacity", "area": "data", "title": "PostgreSQL Flexible Server: versions, limits and maintenance",
+      "path": "guides/data/versions-and-capacity.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Inspect database version, storage/connection warnings or maintenance", "Check platform-supported configuration and upgrade options"],
+      "service_scope": ["Azure Database for PostgreSQL Flexible Server only", "Other engines require their own lifecycle and limit references"],
+      "audience": "Database/platform operators and change approvers",
+      "required_inputs": ["Exact engine/resource, region, SKU/version and topology", "Warning/maintenance interval and intended platform outcome"],
+      "expected_output": "A version/configuration/limit finding and a supported owner-approved platform plan.",
+      "navigation": {"before": ["context"], "related": ["data-retention", "costs"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "storage-access", "area": "data", "title": "Blob Storage: access, request limits and costs",
+      "path": "guides/data/storage-access-and-cost.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Inspect Blob access or storage throttling", "Attribute storage and transfer charges to actual meters"],
+      "service_scope": ["Azure Blob Storage", "Account/network/data-plane permission and meter boundaries"],
+      "audience": "Storage/platform operators and authorized cost investigators",
+      "required_inputs": ["Account type, region, redundancy/tier and access path", "Sanitized error or aligned metric/cost interval"],
+      "expected_output": "A scoped access/limit or meter-cost finding without inspecting object contents.",
+      "navigation": {"before": ["context"], "related": ["connectivity-policy", "data-retention", "costs"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "data-retention", "area": "data", "title": "PostgreSQL and Blob Storage: backups and retained data",
+      "path": "guides/data/backup-and-retention.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Check whether a requested recovery point actually exists", "Inspect retained resources and obligations before restore or deletion"],
+      "service_scope": ["PostgreSQL Flexible Server backups", "Blob Storage protection and retention features"],
+      "audience": "Data/platform owners and restore/change approvers",
+      "required_inputs": ["Exact service/resource and required recovery point", "Retention obligation and permitted inspection scope"],
+      "expected_output": "An observed recovery/retention assessment and a scoped data-owner handoff.",
+      "navigation": {"before": ["context"], "related": ["data-capacity", "storage-access"], "if_blocked": ["permissions", "support"]}
+    },
+    {
+      "id": "connectivity-policy", "area": "network", "title": "Private endpoints, DNS, access and policy denials",
+      "path": "guides/network/connectivity-and-policy.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Separate DNS/network refusal from identity failures", "Inspect private endpoint approval or organizational policy denial"],
+      "service_scope": ["Azure resource connectivity", "Private Link, DNS and Azure Policy evidence"],
+      "audience": "Network/platform operators and governance owners",
+      "required_inputs": ["Approved source network and destination endpoint", "Cloud, permitted path and sanitized error/operation reference"],
+      "expected_output": "A supported failure classification and scoped owner action without bypassing isolation.",
+      "navigation": {"before": ["context"], "related": ["permissions", "audit"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "audit", "area": "network", "title": "Platform changes, audit coverage and retention",
+      "path": "guides/network/audit.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Find who changed a platform setting or role", "Inspect existing audit capture, access and retention gaps"],
+      "service_scope": ["Azure control-plane Activity Log", "Separate service/data-plane and Entra audit surfaces"],
+      "audience": "Authorized platform, security and evidence owners",
+      "required_inputs": ["Exact resource/scope, operation and UTC interval", "Authorized evidence recipient and permitted existing logs"],
+      "expected_output": "A private evidence timeline with provenance, effective-state limits and capture gaps.",
+      "navigation": {"before": ["context"], "related": ["model-audit-logging", "permissions", "safe-operations"], "if_blocked": ["support"]}
+    },
+    {
+      "id": "support", "area": "support", "title": "Support eligibility, warning routing and evidence",
+      "path": "guides/support/escalation.md", "status": "source-reviewed", "kind": "task",
+      "when_to_use": ["Choose the correct benefit, billing, quota or technical-support route", "Prepare sanitized evidence and verify a request's follow-through"],
+      "service_scope": ["Azure support and Service Health", "Program, billing, quota and safety-review handoffs"],
+      "audience": "Authorized incident/request owners and affected platform teams",
+      "required_inputs": ["Sanitized issue, scope, UTC interval and impact", "Relevant deadline and existing request/notice references"],
+      "expected_output": "A classified support route, minimal evidence bundle and a next-owner/status handoff.",
+      "navigation": {"before": ["context"], "related": ["audit", "permissions"], "if_blocked": []}
+    }
   ]
 }

@@ -10,7 +10,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from validate_docs import validate
+from validate_docs import synchronize_navigation, validate, without_generated_metadata
 
 
 class DocumentationValidationTests(unittest.TestCase):
@@ -99,16 +99,20 @@ class DocumentationValidationTests(unittest.TestCase):
         self.assertTrue(any("missing corresponding Technical documentation" in error for error in validate(self.fixture)))
 
     def test_extension_group_with_one_question_and_one_role_passes(self):
+        registry = json.loads((self.fixture / "tests/scenarios.json").read_text(encoding="utf-8"))
+        group_id = f"S{max(int(group['id'][1:]) for group in registry['startups']) + 1:02d}"
+        question_id = f"{group_id}-Q1"
+
         def add_extension(data):
-            data["startups"].append({"id": "S14", "description": "Synthetic extension fixture", "question_ids": ["S14-Q1"]})
+            data["startups"].append({"id": group_id, "description": "Synthetic extension fixture", "question_ids": [question_id]})
             data["scenarios"].append({
-                "id": "S14-Q1", "startup": "S14", "role": "Reviewer",
+                "id": question_id, "startup": group_id, "role": "Reviewer",
                 "question": "Where is the existing support request status?",
                 "baseline_status": None, "guides": ["support"],
             })
         self.change_json("tests/scenarios.json", add_extension)
         path = self.fixture / "guides/support/escalation.md"
-        path.write_text(path.read_text(encoding="utf-8").rstrip() + ", S14-Q1\n", encoding="utf-8")
+        path.write_text(path.read_text(encoding="utf-8").rstrip() + f", {question_id}\n", encoding="utf-8")
         self.assertEqual(validate(self.fixture), [])
 
     def test_extension_must_register_expected_question_ids(self):
@@ -221,6 +225,55 @@ class DocumentationValidationTests(unittest.TestCase):
         for expected in ("az rest --method get", "providers/Microsoft.CognitiveServices/quotaTiers", "currentTierName", "assignmentDate", "tierUpgradePolicy"):
             with self.subTest(expected=expected):
                 self.assertIn(expected, text)
+
+    def test_routing_requires_explicit_service_scope(self):
+        self.change_json("catalog.json", lambda data: data["modules"][0].pop("service_scope"))
+        self.assertTrue(any("routing service_scope" in error for error in validate(self.fixture)))
+
+    def test_navigation_rejects_unknown_targets(self):
+        self.change_json("catalog.json", lambda data: data["modules"][0]["navigation"]["related"].append("missing-task"))
+        self.assertTrue(any("unknown navigation target" in error for error in validate(self.fixture)))
+
+    def test_stale_task_card_is_reported(self):
+        self.change_json("catalog.json", lambda data: data["modules"][0].update(expected_output="A changed outcome."))
+        self.assertTrue(any("stale generated task card" in error for error in validate(self.fixture)))
+
+    def test_sync_refreshes_metadata_without_rewriting_policy(self):
+        path = self.fixture / "guides/shared/context-and-tools.md"
+        original = without_generated_metadata(path.read_text(encoding="utf-8"))
+        self.change_json("catalog.json", lambda data: data["modules"][0].update(expected_output="A changed outcome."))
+        self.assertEqual(synchronize_navigation(self.fixture), [])
+        self.assertEqual(without_generated_metadata(path.read_text(encoding="utf-8")), original)
+        synchronized = path.read_bytes()
+        self.assertEqual(synchronize_navigation(self.fixture), [])
+        self.assertEqual(path.read_bytes(), synchronized)
+        self.assertEqual(validate(self.fixture), [])
+
+    def test_invalid_sync_target_prevents_all_writes(self):
+        path = self.fixture / "guides/shared/context-and-tools.md"
+        original = path.read_bytes()
+        self.change_json("catalog.json", lambda data: data["modules"][-1].update(path="../outside.md"))
+        self.assertTrue(any("invalid repository-relative path" in error for error in synchronize_navigation(self.fixture)))
+        self.assertEqual(path.read_bytes(), original)
+
+    def test_both_readme_indexes_must_link_every_guide(self):
+        for name in ("README.md", "README.zh-CN.md"):
+            path = self.fixture / name
+            text = re.sub(r"\[([^\]]*)\]\(guides/support/escalation\.md\)", r"\1", path.read_text(encoding="utf-8"))
+            path.write_text(text, encoding="utf-8")
+        errors = validate(self.fixture)
+        self.assertTrue(any("README.md: missing guide entry: guides/support/escalation.md" in error for error in errors))
+        self.assertTrue(any("README.zh-CN.md: missing guide entry: guides/support/escalation.md" in error for error in errors))
+
+    def test_reader_cards_records_and_source_packet_links_are_checked(self):
+        resources = ("start/founder.md", "start/founder.zh-CN.md", "reference/cloud-ops-records.md", "reference/source-review.md")
+        for relative in resources:
+            path = self.fixture / relative
+            path.write_text(path.read_text(encoding="utf-8") + "\n[Broken](missing-reader-page.md)\n", encoding="utf-8")
+        errors = validate(self.fixture)
+        for relative in resources:
+            with self.subTest(relative=relative):
+                self.assertTrue(any(str(Path(relative)) in error and "broken or escaping local link" in error for error in errors))
 
 
 if __name__ == "__main__":

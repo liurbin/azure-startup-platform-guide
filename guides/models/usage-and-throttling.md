@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Explain model usage/cost differences or an unexpected charge; Investigate 429s and effective runtime limits |
+| Reader | Model operators and authorized FinOps investigators |
+| Applies to | Foundry model request/token metrics; Deployment-specific billing and throttling evidence |
+| Prepare | Deployment, model/version/type and endpoint; UTC incident interval and aligned cost period |
+| You will get | A usage/cost/limit comparison with supported explanations, gaps and escalation evidence. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No prompts, completions, keys or raw customer logs in Git. Metric/export changes, extra capacity and billable tests require approval.
@@ -36,6 +50,18 @@ Honor returned retry guidance for an authorized request; no infinite retries or 
 
 Compare before/after configured and effective limits in the same scope. For sustained production incidents, supply sanitized error/header samples, aggregation window, allocation and utilization evidence. Never close the issue solely because a dashboard's average is low.
 
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Cost visibility, allocation and spending controls](../accounts/costs.md); [Current tier, quota allocation and capacity](quotas-tiers-and-capacity.md); [Foundry access, audit and cost-control overview](access-audit-and-cost-controls.md)
+
+**If blocked:** [Private endpoints, DNS, access and policy denials](../network/connectivity-and-policy.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
+
 ## Sources
 
 ### Azure website
@@ -51,4 +77,4 @@ Compare before/after configured and effective limits in the same scope. For sust
 
 ## Scenario coverage
 
-S03-Q5, S06-Q3, S06-Q4, S10-Q3
+S03-Q5, S06-Q3, S06-Q4, S10-Q3, S14-Q3

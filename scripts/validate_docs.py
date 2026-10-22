@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import argparse
 from collections import Counter, defaultdict
 from datetime import date
 import json
 from pathlib import Path, PurePosixPath
+import posixpath
 import re
 import sys
 from urllib.parse import unquote, urlsplit
@@ -31,6 +33,9 @@ BASELINE_STARTUPS = {f"S{number:02d}" for number in range(1, 11)}
 BASELINE_CASES = {f"S{startup:02d}-Q{question}" for startup in range(1, 11) for question in range(1, 7)}
 BASELINE_COUNTS = Counter({"explicit": 44, "partial": 12, "missing": 4})
 CASE_ID = r"S\d{2,}-Q[1-9]\d*"
+CARD_MARKERS = ("<!-- task-card:start -->", "<!-- task-card:end -->")
+NAV_MARKERS = ("<!-- navigation:start -->", "<!-- navigation:end -->")
+NAV_FIELDS = ("before", "related", "if_blocked")
 CORE_DOCS = (
     "README.md",
     "README.zh-CN.md",
@@ -38,6 +43,10 @@ CORE_DOCS = (
     "CLAUDE.md",
     ".github/copilot-instructions.md",
     "reference/result-contract.md",
+    "start/founder.md",
+    "start/founder.zh-CN.md",
+    "reference/cloud-ops-records.md",
+    "reference/source-review.md",
 )
 
 
@@ -61,6 +70,136 @@ def repository_path(root: Path, relative: str) -> Path:
     if not result.is_relative_to(root.resolve()):
         raise ValueError(f"path escapes repository: {relative!r}")
     return result
+
+
+def routing_errors(catalog: dict) -> list[str]:
+    errors: list[str] = []
+    if catalog.get("schema_version") != 2:
+        errors.append("catalog schema_version must be 2 for reader routing metadata")
+    modules = catalog.get("modules")
+    if not isinstance(modules, list) or not modules:
+        return errors + ["catalog modules must be a nonempty list"]
+    identifiers = [
+        module["id"] for module in modules
+        if isinstance(module, dict) and isinstance(module.get("id"), str)
+    ]
+    if len(identifiers) != len(modules) or len(set(identifiers)) != len(identifiers):
+        errors.append("routing needs unique string module IDs")
+    for module in modules:
+        if not isinstance(module, dict):
+            errors.append("routing module must be an object")
+            continue
+        identifier = module.get("id", "<missing>")
+        for field in ("id", "title", "path", "audience", "expected_output"):
+            if not isinstance(module.get(field), str) or not module[field].strip():
+                errors.append(f"{identifier}: routing {field} must be a nonempty string")
+        if isinstance(identifier, str) and not re.fullmatch(r"[a-z][a-z0-9-]*", identifier):
+            errors.append(f"{identifier}: invalid routing module id")
+        if module.get("kind") not in ("task", "overview"):
+            errors.append(f"{identifier}: routing kind must be task or overview")
+        for field in ("when_to_use", "service_scope", "required_inputs"):
+            values = module.get(field)
+            if not isinstance(values, list) or not values or not all(isinstance(value, str) and value.strip() for value in values):
+                errors.append(f"{identifier}: routing {field} must be a nonempty string list")
+        navigation = module.get("navigation")
+        if not isinstance(navigation, dict) or set(navigation) != set(NAV_FIELDS):
+            errors.append(f"{identifier}: navigation must declare before, related and if_blocked")
+            continue
+        for field in NAV_FIELDS:
+            targets = navigation[field]
+            if not isinstance(targets, list) or not all(isinstance(target, str) for target in targets):
+                errors.append(f"{identifier}: navigation {field} must be a string list")
+                continue
+            if len(targets) != len(set(targets)):
+                errors.append(f"{identifier}: duplicate navigation target in {field}")
+            for target in targets:
+                if target not in identifiers:
+                    errors.append(f"{identifier}: unknown navigation target: {target}")
+                elif target == identifier:
+                    errors.append(f"{identifier}: navigation cannot link to itself")
+    return errors
+
+
+def render_task_card(module: dict) -> str:
+    rows = (
+        ("Use this for", "; ".join(module["when_to_use"])),
+        ("Reader", module["audience"]),
+        ("Applies to", "; ".join(module["service_scope"])),
+        ("Prepare", "; ".join(module["required_inputs"])),
+        ("You will get", module["expected_output"]),
+    )
+    kind = "Task guide" if module["kind"] == "task" else "Scenario overview (reference/routing only)"
+    lines = [CARD_MARKERS[0], "**At a glance**", "", f"**Guide type:** {kind}", "", "| Task card | |", "|---|---|"]
+    for label, value in rows:
+        value = value.replace("|", "\\|").replace("\n", " ")
+        lines.append(f"| {label} | {value} |")
+    return "\n".join(lines + [CARD_MARKERS[1]])
+
+
+def render_navigation(module: dict, by_id: dict[str, dict]) -> str:
+    lines = [NAV_MARKERS[0], "### Continue", ""]
+    labels = {"before": "Before you start", "related": "Related tasks", "if_blocked": "If blocked"}
+    empty = {
+        "before": "No prerequisite reading; the scope and authorization rules still apply.",
+        "related": "No additional reading selected.",
+        "if_blocked": "Follow this guide's responsible-owner and escalation handoff.",
+    }
+    for field in NAV_FIELDS:
+        links = []
+        for identifier in module["navigation"][field]:
+            target = by_id[identifier]
+            relative = posixpath.relpath(target["path"], posixpath.dirname(module["path"]))
+            links.append(f"[{target['title']}]({relative})")
+        lines.extend([f"**{labels[field]}:** " + ("; ".join(links) if links else empty[field]), ""])
+    lines.extend(["Check each linked guide's own status and scope. A link does not grant authorization.", NAV_MARKERS[1]])
+    return "\n".join(lines)
+
+
+def without_generated_metadata(text: str) -> str:
+    for start, end in (CARD_MARKERS, NAV_MARKERS):
+        count = text.count(start)
+        if count != text.count(end) or count > 1:
+            raise ValueError("generated metadata markers must be absent or appear as one complete pair")
+        if count:
+            pattern = re.escape(start) + r".*?" + re.escape(end) + r"\n{0,2}"
+            text, replaced = re.subn(pattern, "", text, flags=re.DOTALL)
+            if replaced != 1:
+                raise ValueError("generated metadata marker order is invalid")
+    return text
+
+
+def synchronize_navigation(root: Path) -> list[str]:
+    root = root.resolve()
+    errors: list[str] = []
+    catalog = read_object(root / "catalog.json", errors)
+    if catalog is None:
+        return errors
+    errors.extend(routing_errors(catalog))
+    if errors:
+        return errors
+    by_id = {module["id"]: module for module in catalog["modules"]}
+    updates: dict[Path, str] = {}
+    for module in catalog["modules"]:
+        try:
+            path = repository_path(root, module["path"])
+            if not path.is_relative_to(root / "guides") or path.suffix != ".md" or path in updates:
+                raise ValueError("sync requires unique Markdown paths under guides")
+            text = without_generated_metadata(path.read_text(encoding="utf-8"))
+            for anchor, block in (
+                ("## Scope and prerequisites\n", render_task_card(module)),
+                ("## Sources\n", render_navigation(module, by_id)),
+            ):
+                if text.count(anchor) != 1:
+                    raise ValueError(f"expected one {anchor.strip()} anchor")
+                text = text.replace(anchor, block + "\n\n" + anchor, 1)
+            updates[path] = text
+        except (OSError, UnicodeError, ValueError) as error:
+            errors.append(f"{module['id']}: cannot synchronize navigation: {error}")
+    if errors:
+        return errors
+    for path, text in updates.items():
+        path.write_text(text, encoding="utf-8")
+    return []
 
 
 def sections(text: str) -> dict[str, str]:
@@ -201,6 +340,9 @@ def validate(root: Path) -> list[str]:
         return errors + ["catalog/modules and registry/startups/scenarios must be nonempty lists"]
     if not valid_review_date(catalog.get("reviewed_on")):
         return errors + ["catalog reviewed_on must be a nonfuture ISO baseline date"]
+    metadata_errors = routing_errors(catalog)
+    errors.extend(metadata_errors)
+    by_id = {module["id"]: module for module in modules} if not metadata_errors else {}
 
     module_paths: dict[str, Path] = {}
     declared_cases: dict[str, set[str]] = {}
@@ -236,8 +378,22 @@ def validate(root: Path) -> list[str]:
                 errors.append(f"{identifier}: empty or missing section: {heading}")
         boundary = contents.get("Scope and prerequisites", "").lower()
         check_maturity(root, module, text, boundary, errors)
+        if module.get("kind") == "overview" and ("reference only" not in boundary or "do not execute" not in boundary):
+            errors.append(f"{identifier}: overview scope must be reference only and prohibit execution")
         if "read-only" not in boundary or "approval" not in boundary:
             errors.append(f"{identifier}: standalone scope must state read-only mode and approval")
+        if not metadata_errors:
+            for name, markers, expected in (
+                ("task card", CARD_MARKERS, render_task_card(module)),
+                ("navigation", NAV_MARKERS, render_navigation(module, by_id)),
+            ):
+                if any(text.count(marker) != 1 for marker in markers) or expected not in text:
+                    errors.append(f"{identifier}: missing or stale generated {name}; run --sync-navigation")
+            if text.find(CARD_MARKERS[0]) > text.find("## Scope and prerequisites"):
+                errors.append(f"{identifier}: task card must precede the scope section")
+            navigation_position = text.find(NAV_MARKERS[0])
+            if not text.find("## Verification and escalation") < navigation_position < text.find("## Sources"):
+                errors.append(f"{identifier}: navigation must follow verification and precede sources")
         source_text = contents.get("Sources", "")
         urls = re.findall(r"https://[^\s<>]+", source_text)
         if not urls:
@@ -328,6 +484,12 @@ def validate(root: Path) -> list[str]:
             documents[path] = path.read_text(encoding="utf-8")
     for path, text in documents.items():
         check_links(root, path, text, errors)
+    for relative in ("README.md", "README.zh-CN.md"):
+        text = documents.get(root / relative, "")
+        targets = set(re.findall(r"\[[^\]]*\]\(([^)\s]+)\)", text))
+        for path in module_paths.values():
+            if path.relative_to(root).as_posix() not in targets:
+                errors.append(f"{relative}: missing guide entry: {path.relative_to(root).as_posix()}")
     example = read_object(root / "examples" / "result.example.json", errors)
     if example is not None and (
         example.get("mode") != "reference"
@@ -340,7 +502,15 @@ def validate(root: Path) -> list[str]:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--sync-navigation", action="store_true", help="Regenerate task cards and cross-guide links from catalog.json before validating")
+    args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
+    if args.sync_navigation:
+        errors = synchronize_navigation(root)
+        if errors:
+            print("\n".join(f"ERROR: {error}" for error in errors), file=sys.stderr)
+            return 1
     errors = validate(root)
     if errors:
         print("\n".join(f"ERROR: {error}" for error in errors), file=sys.stderr)

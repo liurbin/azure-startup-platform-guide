@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Investigate a blocked Marketplace purchase or offer; Find the right invoice or billing-document access route |
+| Reader | Procurement, finance and authorized billing owners |
+| Applies to | Microsoft Marketplace; Agreement-specific Azure invoices and billing roles |
+| Prepare | Cloud, agreement and billing/subscription scope; Seller/offer/plan or invoice period |
+| You will get | A classified acquisition/document blocker and the correct authorized-owner handoff. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No invoice contents, addresses, payment details or secrets in Git. Commercial terms and billing changes require the authorized customer's approval.
@@ -29,6 +43,18 @@ Prepare separate acceptance and purchase handoffs, including who must act and th
 ## Verification and escalation
 
 After customer action, verify offer/order status, exact billed subscription and actual invoice details at the right scope. Reconcile credit coverage separately. Send disputed eligibility or document corrections through official billing/program channels with minimal identifiers.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Startup credits, binding and expiry](credits.md); [Cost visibility, allocation and spending controls](costs.md); [Contract and compliance evidence: where to look and who decides](compliance-terms.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

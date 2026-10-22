@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Inspect database version, storage/connection warnings or maintenance; Check platform-supported configuration and upgrade options |
+| Reader | Database/platform operators and change approvers |
+| Applies to | Azure Database for PostgreSQL Flexible Server only; Other engines require their own lifecycle and limit references |
+| Prepare | Exact engine/resource, region, SKU/version and topology; Warning/maintenance interval and intended platform outcome |
+| You will get | A version/configuration/limit finding and a supported owner-approved platform plan. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No database rows, credentials or connection strings in Git. Scaling, upgrades, parameters and maintenance changes require approval.
@@ -29,6 +43,18 @@ Present supported scale or platform-configuration options, possible downtime, bi
 ## Verification and escalation
 
 After authorized work, reread engine/SKU/storage/state and observe the relevant metric window. Confirm the warning's actual condition; a dismissed notification is not proof of repair. Escalate inconsistencies with service type, version, SKU and sanitized metric/event evidence.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [PostgreSQL and Blob Storage: backups and retained data](backup-and-retention.md); [Cost visibility, allocation and spending controls](../accounts/costs.md)
+
+**If blocked:** [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

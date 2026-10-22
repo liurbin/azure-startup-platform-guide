@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Inspect Blob access or storage throttling; Attribute storage and transfer charges to actual meters |
+| Reader | Storage/platform operators and authorized cost investigators |
+| Applies to | Azure Blob Storage; Account/network/data-plane permission and meter boundaries |
+| Prepare | Account type, region, redundancy/tier and access path; Sanitized error or aligned metric/cost interval |
+| You will get | A scoped access/limit or meter-cost finding without inspecting object contents. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No object contents, keys, SAS URLs or customer exports in Git. Authorization, networking, lifecycle and diagnostic changes require approval.
@@ -29,6 +43,18 @@ Propose the narrow role/network/lifecycle or capacity change needed. Public acce
 ## Verification and escalation
 
 Recheck effective configuration and the relevant metrics. Reading or writing a test blob needs explicit data-plane authorization and a non-sensitive test object. Escalate unresolved throttling with request IDs, response codes, account type and aggregation interval.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Private endpoints, DNS, access and policy denials](../network/connectivity-and-policy.md); [PostgreSQL and Blob Storage: backups and retained data](backup-and-retention.md); [Cost visibility, allocation and spending controls](../accounts/costs.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

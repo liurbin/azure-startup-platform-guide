@@ -4,6 +4,20 @@ Policy checked: [set on review]. Status: draft; sources not re-verified; not ten
 
 Previous source-reviewed baseline: 2026-09-17. Existing controls, source links and scenario IDs are retained; additions and conflicts require human source review.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Reconcile charges, credits or a spending spike; Inspect allocation, budgets and cost-monitoring ownership |
+| Reader | Finance/FinOps owners and authorized platform operators |
+| Applies to | Microsoft Cost Management; Agreement-specific billing and spending controls |
+| Prepare | Billing scope, agreement, currency and period; Cost basis and requested comparison or control |
+| You will get | A scoped cost/credit reconciliation, allocation gaps and an owned alert/control proposal. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference only while draft. Do not execute the read-only checks or changes below until source review and explicit customer authorization. No invoices, customer exports, or secrets in Git. Changing budgets, tags, allocation rules, or spending controls needs approval.
@@ -27,6 +41,7 @@ Budgets notify; they are not an automatic universal spending cap. Offer-specific
 6. For project allocation, inspect existing resource tags and supported Cost allocation rules. Record untagged/shared charges and the denominator used to calculate any untagged share. Identify directly attributable, rule-allocated and still-unassigned amounts; do not pretend labels automatically cover every historical meter.
 7. Open Budgets and review scope, thresholds, recipients, actual/forecast alert type and action groups where exposed. Record whether the relevant condition has fired and whether delivery/action evidence is available. Separately inspect the offer's spending-limit status and any approved automation.
 8. Read remaining credits and expiry from the appropriate benefit view, not by subtracting Cost analysis from a remembered award. The [credits guide](credits.md) supplies the offer-specific handoff.
+9. For model cost monitoring, use the [usage guide](../models/usage-and-throttling.md) for existing request/token evidence. Inspect any existing anomaly alerts separately from cost budgets: resource/deployment scope, metric, aggregation/window, threshold, recipients, evaluation/delivery delay and response owner. Do not create alerts or billable traffic during this review.
 
 Use a small reconciliation record rather than one unexplained total:
 
@@ -67,11 +82,29 @@ Propose tag keys, assignment owners, allocation rules, thresholds and recipients
 
 Provide the approver with exact scope, current/requested setting, account-type availability, expected reporting effect, possible cost/service impact and success evidence. A tagging/reporting change and a resource-sizing change are separate approvals. Keep this task focused on platform use.
 
+Agree on usage-anomaly and actual/forecast budget thresholds, named responders and a response runbook. Include tools, storage, network and logging charges where relevant. A gateway/application limit or other stop mechanism needs separate design, approval and verification; budgets, quotas and content guardrails are not a guaranteed financial stop switch.
+
 ## Verification and escalation
 
 Return a resource/meter attribution and a separate balance comparison, with unknowns. Confirm saved controls and their actual notification/action behavior; do not trigger billable load to test a budget. Escalate unexplained charges with sanitized meter, scope, period and cost basis.
 
 After approved allocation/tag changes, compare the same scoped report after applicable refresh and explain residual/unassigned costs. After a budget change, confirm the saved condition and recipients; delivery not yet observed remains unknown. For disputes, provide both view definitions, meter/quantity evidence and timestamps without uploading invoices or raw exports publicly.
+
+For model alerts, confirm intended-owner delivery and separately examine fresh usage windows, posted costs and actual credit state. Where a resource is shared, label application-level attribution as observed, estimated or unavailable; do not invent per-user billing from shared keys. An anomaly is not proof of credential theft; use the [Foundry overview](../models/access-audit-and-cost-controls.md) to select additional access or audit tasks when evidence warrants them.
+
+Use the [private inspection/acceptance templates](../../reference/cloud-ops-records.md) for permitted work. The [draft source-check packet](../../reference/source-review.md) records pending human decisions; neither document authorizes execution or promotes this guide.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Startup credits, binding and expiry](credits.md); [Model usage, costs and rate limiting](../models/usage-and-throttling.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 
@@ -99,7 +132,8 @@ Existing sources are retained. Additional draft references below have not been f
 - https://learn.microsoft.com/azure/cost-management-billing/costs/enable-tag-inheritance
 - https://learn.microsoft.com/azure/cost-management-billing/costs/understand-cost-mgt-data
 - https://learn.microsoft.com/azure/cost-management-billing/manage/spending-limit
+- https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/monitor-models
 
 ## Scenario coverage
 
-S01-Q3, S02-Q5, S02-Q6, S08-Q2, S08-Q4, S09-Q5
+S01-Q3, S02-Q5, S02-Q6, S08-Q2, S08-Q4, S09-Q5, S14-Q3

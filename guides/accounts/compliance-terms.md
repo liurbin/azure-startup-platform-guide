@@ -2,6 +2,20 @@
 
 Policy checked: [set on review]. Status: draft; sources not re-verified; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Locate provider DPA, BAA or regional contract evidence; Route a customer or investor due-diligence request |
+| Reader | Founders and customer legal, compliance or contract owners |
+| Applies to | Agreement-specific provider evidence; Service/model scope and report access conditions |
+| Prepare | Exact evidence request and agreement/channel; Relevant service/model and responsible contract owner |
+| You will get | A private evidence index and owner questions, not a legal or compliance verdict. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference only while draft. Do not execute the read-only checks or changes below until source review and explicit customer authorization. Changes and document acceptance always require approval.
@@ -58,6 +72,20 @@ Before an authorized customer submission, the owner rechecks the applicable docu
 <!-- REVIEW: The draft describes Service Trust Portal access and NDA-style acceptance as uniform. Verify access and redistribution conditions for the actual portal action and report; do not assume every artifact has identical requirements. -->
 
 Keep report contents and agreement evidence in the customer's approved location. Use [audit](../network/audit.md), [permissions](permissions.md) and [support handoff](../support/escalation.md) for scoped operational evidence, not a public upload of protected materials.
+
+Source-check observations and unresolved human decisions are tracked in the [draft review packet](../../reference/source-review.md). The packet does not promote this guide or establish contractual applicability.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Available models and deployment options](../models/availability-and-deployments.md); [Platform changes, audit coverage and retention](../network/audit.md)
+
+**If blocked:** [Marketplace acquisition and invoice access](marketplace-and-invoices.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

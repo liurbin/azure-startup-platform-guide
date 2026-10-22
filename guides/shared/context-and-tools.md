@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Confirm which cloud, tenant and subscription to use; Identify missing tools or provider registration |
+| Reader | Founders and authorized platform operators |
+| Applies to | Azure cloud context; Azure China context identification only; Azure Resource Manager |
+| Prepare | Intended cloud and target scope; Reference-only or explicitly authorized inspection |
+| You will get | A confirmed context/tool checklist, with mismatches and unknowns called out. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No secrets or customer exports in Git. Changes need explicit approval.
@@ -37,6 +51,18 @@ Interactive sign-in is performed by the customer; never request their password o
 ## Verification and escalation
 
 Return the confirmed tuple, tool capability/version, provider state, and observation time. Recheck registration for the requested resource type and region; a pending operation is not a blanket failure or success. Escalate contradictory contexts with sanitized IDs and error text.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** No prerequisite reading; the scope and authorization rules still apply.
+
+**Related tasks:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Preview, approve and recover resource changes](safe-operations.md); [Startup credits, binding and expiry](../accounts/credits.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Investigate a Container Apps deployment or image-pull failure; Inspect hostname, DNS and certificate bindings |
+| Reader | Container Apps operators and domain/registry owners |
+| Applies to | Azure Container Apps; Selected registry, ingress and domain/certificate access paths |
+| Prepare | Selected app/environment and deployment time; Image reference or hostname and sanitized platform error |
+| You will get | A classified platform-access/binding finding and an exact owner/change or application handoff. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No registry secrets, environment-variable values or private logs in Git. Image access, identity, ingress, DNS, certificates and revisions require change approval.
@@ -29,6 +43,18 @@ Propose exact identity/role changes, platform settings or DNS records with their
 ## Verification and escalation
 
 Verify the new revision's platform status and actual hostname/certificate binding. A customer-approved endpoint check must not send sensitive content or imply application correctness. Supply platform operation IDs and redacted errors when escalation is necessary.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Federation, credential lifecycle and ownership](../accounts/identity-lifecycle.md); [Private endpoints, DNS, access and policy denials](../network/connectivity-and-policy.md); [Container Apps: plans, limits and idle costs](plans-and-limits.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

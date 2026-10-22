@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Check GPU VM eligibility and quota; Investigate allocation failure despite approved quota |
+| Reader | ML/platform operators and capacity-request owners |
+| Applies to | Azure VM GPU SKUs; Regional/family quotas and allocation restrictions |
+| Prepare | Cloud, subscription/offer, SKU/family and region/zone; Quantity, priority and date needed or sanitized allocation error |
+| You will get | Separate SKU, quota and capacity findings and a correctly scoped request/escalation. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No secrets or customer exports in Git. Provisioning, quota requests and reservations need approval.
@@ -33,6 +47,18 @@ Use Azure Portal's quota request surface for the correct compute family/region. 
 ## Verification and escalation
 
 After approval, reread the exact total and family limits. Check actual allocation only as part of an approved deployment. If it still fails, provide the request reference and allocation error to support; do not describe the increase as a capacity reservation.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Compute state, interruptions and billing](state-and-billing.md); [Cost visibility, allocation and spending controls](../accounts/costs.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

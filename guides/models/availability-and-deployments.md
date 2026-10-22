@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Check whether a model/version can be used; Compare supported deployment and processing-location choices |
+| Reader | Founders, model platform owners and compliance reviewers |
+| Applies to | Microsoft Foundry model catalog and deployment choices; New/classic resource-generation identification |
+| Prepare | Cloud, resource generation and model/version; Intended processing boundary and authorized subscription scope |
+| You will get | An evidence-backed candidate table separating availability, permission, terms, quota and capacity. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No customer payloads or secrets in Git. Deployment, purchase and terms acceptance require approval.
@@ -30,6 +44,18 @@ Present only observed eligible options and their processing, cost and capacity d
 ## Verification and escalation
 
 Verify the actual model/version/type/location and successful provisioning after an approved operation. Any inference test is a separate potentially billable action. Keep a timestamped availability decision, not a static repository-wide list of "available models".
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Current tier, quota allocation and capacity](quotas-tiers-and-capacity.md); [Marketplace acquisition and invoice access](../accounts/marketplace-and-invoices.md); [Contract and compliance evidence: where to look and who decides](../accounts/compliance-terms.md)
+
+**If blocked:** [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

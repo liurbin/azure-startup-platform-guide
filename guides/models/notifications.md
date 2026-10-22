@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Classify a model warning or retirement notice; Identify affected deployments, owners and deadlines |
+| Reader | Model platform owners and notice recipients |
+| Applies to | Foundry model lifecycle notices; Platform, billing and safety-notice routing |
+| Prepare | Sanitized notice, origin, timestamp and deadline; Approved target deployment scope |
+| You will get | An affected/unaffected deployment list and an owner/deadline handoff with unresolved facts. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No raw customer messages, secrets or account exports in Git. Version changes, control changes and support submissions need approval.
@@ -30,6 +44,18 @@ Prepare a platform change plan with exact version/type, expected billing/process
 ## Verification and escalation
 
 After customer approval and execution, inspect actual version, update policy, provisioning state and continued notice applicability. Any inference test is separately authorized. Escalate contradictory dates, unavailable replacements or unclear policy scope with notice/reference IDs and sanitized deployment details.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [Available models and deployment options](availability-and-deployments.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

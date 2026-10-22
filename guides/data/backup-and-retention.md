@@ -2,6 +2,20 @@
 
 Policy checked: 2026-09-17. Status: source-reviewed; not tenant-tested.
 
+<!-- task-card:start -->
+**At a glance**
+
+**Guide type:** Task guide
+
+| Task card | |
+|---|---|
+| Use this for | Check whether a requested recovery point actually exists; Inspect retained resources and obligations before restore or deletion |
+| Reader | Data/platform owners and restore/change approvers |
+| Applies to | PostgreSQL Flexible Server backups; Blob Storage protection and retention features |
+| Prepare | Exact service/resource and required recovery point; Retention obligation and permitted inspection scope |
+| You will get | An observed recovery/retention assessment and a scoped data-owner handoff. |
+<!-- task-card:end -->
+
 ## Scope and prerequisites
 
 Mode: reference or authorized read-only. No customer database/blob contents or secrets in Git. Restore, retention, lifecycle, replication and deletion changes require approval.
@@ -30,6 +44,18 @@ Prepare a restore plan with exact point, destination, access controls, costs and
 ## Verification and escalation
 
 Reinspect retained history after approved configuration changes. A completed restore resource does not establish business-data correctness; hand that verification to the data owner. Report inability to recover promptly with service/version, target time and sanitized operation IDs.
+
+<!-- navigation:start -->
+### Continue
+
+**Before you start:** [Cloud context, tools and provider registration](../shared/context-and-tools.md)
+
+**Related tasks:** [PostgreSQL Flexible Server: versions, limits and maintenance](versions-and-capacity.md); [Blob Storage: access, request limits and costs](storage-access-and-cost.md)
+
+**If blocked:** [Resource, data-plane and billing permissions](../accounts/permissions.md); [Support eligibility, warning routing and evidence](../support/escalation.md)
+
+Check each linked guide's own status and scope. A link does not grant authorization.
+<!-- navigation:end -->
 
 ## Sources
 

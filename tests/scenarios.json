@@ -13,7 +13,8 @@
     {"id": "S08", "description": "印度班加罗尔：2人教育应用，角色兼任"},
     {"id": "S09", "description": "以色列特拉维夫：25人安全SaaS"},
     {"id": "S10", "description": "巴西圣保罗：7人实时语音团队"},
-    {"id": "S13", "description": "Compliance and customer due diligence: fictional cross-startup questions", "question_ids": ["S13-Q1", "S13-Q2", "S13-Q3", "S13-Q4", "S13-Q5"]}
+    {"id": "S13", "description": "Compliance and customer due diligence: fictional cross-startup questions", "question_ids": ["S13-Q1", "S13-Q2", "S13-Q3", "S13-Q4", "S13-Q5"]},
+    {"id": "S14", "description": "Model access, audit/log safety and cost monitoring: fictional cross-startup questions", "question_ids": ["S14-Q1", "S14-Q2", "S14-Q3"]}
   ],
   "scenarios": [
     {"id": "S01-Q1", "startup": "S01", "role": "创始人", "question": "Credits 从哪里激活，怎么确认绑定的是公司要用的订阅？", "baseline_status": "explicit", "guides": ["credits"]},
@@ -80,6 +81,9 @@
     {"id": "S13-Q2", "startup": "S13", "role": "Compliance lead, Series A health-tech", "question": "A security questionnaire asks for 'your cloud provider's DPA and sub-processor list'. What do we send?", "baseline_status": null, "guides": ["compliance-terms", "audit"]},
     {"id": "S13-Q3", "startup": "S13", "role": "Platform engineer, regulated fintech", "question": "Is the model we deployed on a Global Standard deployment inside HIPAA / EU data-residency scope, or do we need a Data Zone deployment?", "baseline_status": null, "guides": ["compliance-terms", "model-availability", "model-quota"]},
     {"id": "S13-Q4", "startup": "S13", "role": "CTO, seed-stage", "question": "Investor diligence wants our SOC 2 / ISO evidence for the Azure services we use. Can I download reports and put them in the data room?", "baseline_status": null, "guides": ["compliance-terms", "support"]},
-    {"id": "S13-Q5", "startup": "S13", "role": "Founder", "question": "The Marketplace model we bought - is it covered by Microsoft's DPA or the seller's terms?", "baseline_status": null, "guides": ["compliance-terms", "marketplace-invoices"]}
+    {"id": "S13-Q5", "startup": "S13", "role": "Founder", "question": "The Marketplace model we bought - is it covered by Microsoft's DPA or the seller's terms?", "baseline_status": null, "guides": ["compliance-terms", "marketplace-invoices"]},
+    {"id": "S14-Q1", "startup": "S14", "role": "Platform owner", "question": "How do we harden Foundry model access using endpoint-supported identities, least privilege, network controls and safe key management without breaking legitimate clients?", "baseline_status": null, "guides": ["model-access-audit-costs", "model-access-security"]},
+    {"id": "S14-Q2", "startup": "S14", "role": "Security and data owner", "question": "Which management, request-metadata and LLM-content logs do we need, and how do we control collection, correlation, readers, exports and retention without exposing prompts or secrets?", "baseline_status": null, "guides": ["model-access-audit-costs", "model-audit-logging"]},
+    {"id": "S14-Q3", "startup": "S14", "role": "FinOps owner", "question": "How do we monitor request/token anomalies, posted costs and remaining credits, verify alert delivery, and investigate a suspected key-related spike without mistaking budgets or delayed charges for a hard stop?", "baseline_status": null, "guides": ["model-access-audit-costs", "costs", "model-usage"]}
   ]
 }
