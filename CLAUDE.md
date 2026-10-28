@@ -1,5 +1,11 @@
-# Repository reference
+# 维护约定
 
-@AGENTS.md
+完整规范见[AGENTS.md](AGENTS.md)，修改内容前先读取。
 
-Use the shared contract and the selected task guide. Do not assume this file or any link has been loaded unless the host confirms it.
+- 保留22篇中文guide、九段模板及现有治理层级路径；不增加读者索引或guide。
+- 首屏用白话直接回答；事实先列适用条件，特定协议或产品例子不得泛化。
+- 每个问题有一个主要答案归属，相关篇只补边界与链接。
+- 每条规则附能支持实际断言的Microsoft Learn来源；复核后才更新last_verified。
+- 不写死易变数值，不虚构余额、容量、协议资格或故障原因。
+- 不加入运行模式、密钥声明、变更审批或配置执行步骤；范围外内容不迁回正文。
+- README中英文目录、完整URL、日期与65题覆盖同步；发布候选与真实线上可用性分开验证。
