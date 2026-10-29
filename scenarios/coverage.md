@@ -5,7 +5,7 @@
 | ID | 状态 | 主guide | 覆盖依据或限制 |
 |---|---|---|---|
 | Q001 | 已覆盖 | [资源层级](../guides/00-foundations/resource-hierarchy.md) | 租户、订阅、资源组概念与实际定位 |
-| Q002 | 已覆盖 | [资源层级](../guides/00-foundations/resource-hierarchy.md) | 管理容器职责；未按固定规模给出订阅数量 |
+| Q002 | 已覆盖 | [资源层级](../guides/00-foundations/resource-hierarchy.md) | 小团队、环境差异、跨区域与共同治理的条件化示例；不按人数给固定订阅数量 |
 | Q003 | 已覆盖 | [资源层级](../guides/00-foundations/resource-hierarchy.md) | 同名不等于同ID、目录和订阅筛选 |
 | Q004 | 已覆盖 | [资源层级](../guides/00-foundations/resource-hierarchy.md) | 管理范围继承概念；具体Policy效果另由策略篇负责 |
 | Q005 | 部分 | [资源层级](../guides/00-foundations/resource-hierarchy.md) | 有ID各层和例外说明，不是全部嵌套/扩展资源ID解析器 |
@@ -16,7 +16,7 @@
 | Q010 | 已覆盖 | [Credits](../guides/01-credits-and-billing/credits.md) | 余额、绑定、适用费用与方案差异 |
 | Q011 | 部分 | [Credits](../guides/01-credits-and-billing/credits.md) | 解释spending limit分支，不穷举所有项目/offer的继续付费安排 |
 | Q012 | 已覆盖 | [Credits](../guides/01-credits-and-billing/credits.md) | 抵扣资格唯一在Credits展开，采购篇只链接 |
-| Q013 | 已覆盖 | [购买与条款](../guides/01-credits-and-billing/purchases-and-terms.md) | 区分MCA/EA接受者、订阅购买角色及采购策略 |
+| Q013 | 已覆盖 | [购买与条款](../guides/01-credits-and-billing/purchases-and-terms.md) | 区分MCA/EA分步角色、产品购买授权与采购策略；单击购买按适用流程和各产品结果判断 |
 | Q014 | 已覆盖 | [发票](../guides/01-credits-and-billing/invoices.md) | 按协议找下载入口和角色，未知协议先识别 |
 | Q015 | 已覆盖 | [发票](../guides/01-credits-and-billing/invoices.md) | 范围、时间、税、Credits和结算口径 |
 | Q016 | 已覆盖 | [发票](../guides/01-credits-and-billing/invoices.md) | 费用字段与非资源级明细例外 |
@@ -70,4 +70,4 @@
 | Q064 | 超出范围 | — | 网络配置有意排除，不指向一篇也不回答网络配置的guide |
 | Q065 | 超出范围 | — | 备份、域名证书、应用架构有意排除，不重新增篇 |
 
-最后更新：2026-10-28。各题的“已覆盖”只在本文定义的知识参考层成立；没有执行客户查询、独立LLM盲测或生产环境验证。
+最后更新：2026-10-29。各题的“已覆盖”只在本文定义的知识参考层成立；没有执行客户查询、独立LLM盲测或生产环境验证。

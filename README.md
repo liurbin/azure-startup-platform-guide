@@ -2,9 +2,11 @@
 
 [中文说明](README.zh-CN.md)
 
-Platform knowledge for startup founders, technical leaders, finance owners, Cloud Ops teams and their LLM agents using **Azure Global**. The 22 guides are written in Chinese; this English directory links to the same articles, not a second set of answers.
+Platform knowledge for startup founders, technical leaders, finance owners, Cloud Ops teams and their LLM agents using **Azure Global**. The 22 guides are written in Chinese; this English directory links to the same articles, not an English article edition. Readers who do not read Chinese can use an agent that supports translation.
 
-> **Use it:** give your agent this README URL and your question; it selects 1–3 relevant guides and answers using their conclusions, applicability conditions and sources.
+> **Use it:** give your agent this README URL and your question, ask it to read 1–3 relevant guides and answer in your question's language (or a language you specify), preserving applicability conditions, uncertainty and source links.
+
+When translating or adapting an explanation, keep exact role names, error codes and field names, explain necessary terms on first use, and do not turn a service example into an Azure-wide rule. If the guides do not answer the question, state the gap rather than fill it with an unsupported claim.
 
 ## Purpose and boundaries
 
@@ -20,11 +22,11 @@ Stable mechanisms can be explained from the articles. A balance, current capacit
 
 | Governance layer | Guide | What it answers | Full URL |
 |---|---|---|---|
-| Foundations | [Resource hierarchy](guides/00-foundations/resource-hierarchy.md) | What each identity/resource container means and how to identify a scope. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-hierarchy.md |
+| Foundations | [Resource hierarchy](guides/00-foundations/resource-hierarchy.md) | What each container means and which management boundaries justify grouping or splitting. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-hierarchy.md |
 | Foundations | [Billing hierarchy](guides/00-foundations/billing-hierarchy.md) | Which agreement, billing object and role govern payment access. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/billing-hierarchy.md |
 | Foundations | [Provider registration](guides/00-foundations/resource-providers.md) | Whether a registration error really concerns registration, permission or unsupported API/location. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-providers.md |
 | Credits and billing | [Credits](guides/01-credits-and-billing/credits.md) | How credit types, balance fields, eligible use and expiry conditions differ. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/credits.md |
-| Credits and billing | [Purchases and terms](guides/01-credits-and-billing/purchases-and-terms.md) | Who accepts/buys an offer and how to distinguish procurement from contractual evidence. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/purchases-and-terms.md |
+| Credits and billing | [Purchases and terms](guides/01-credits-and-billing/purchases-and-terms.md) | Who accepts/buys an offer and where to find and assess contract documents and reports. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/purchases-and-terms.md |
 | Credits and billing | [Invoices](guides/01-credits-and-billing/invoices.md) | How invoice scope, billing cadence and usage details explain the amount due. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/invoices.md |
 | Credits and billing | [Ownership and transfers](guides/01-credits-and-billing/subscription-and-billing-transfer.md) | How billing transfers, directory changes and resource moves differ. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/subscription-and-billing-transfer.md |
 | Governance: identity | [Access types](guides/02-governance/identity/access-types.md) | Which identity, action and scope explain an access refusal. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/identity/access-types.md |
