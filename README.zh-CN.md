@@ -44,7 +44,7 @@
 | 支持 | [通知与退役](guides/04-support/notices-and-retirements.md) | 未来哪些变更影响谁，谁应在何时行动。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/notices-and-retirements.md |
 | 支持 | [服务健康](guides/04-support/service-health.md) | 公开、个性化和单资源健康各能说明什么。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/service-health.md |
 | 支持 | [支持请求](guides/04-support/support-requests.md) | 实际问题应选什么支持路径、证据、严重度及跟进方式。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/support-requests.md |
-| 例行基线审计 | [例行基线审计](guides/05-routine-baseline-audit/azure-baseline-audit.md) | 让智能体定期检查安全、费用、错误与警告，明确证据要求和只读边界。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/05-routine-baseline-audit/azure-baseline-audit.md |
+| 例行基线审计 | [例行基线审计](guides/05-routine-baseline-audit/azure-baseline-audit.md) | 定期应检查哪些安全、费用、错误与警告事项，以及相应的证据要求和只读边界。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/05-routine-baseline-audit/azure-baseline-audit.md |
 
 维护规范见[AGENTS.md](AGENTS.md)与[CLAUDE.md](CLAUDE.md)。[问题集](scenarios/questions.md)和[覆盖表](scenarios/coverage.md)只供维护回归，不是第二套读者索引，也不证明真实租户验证。
 
