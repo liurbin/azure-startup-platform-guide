@@ -2,9 +2,11 @@
 
 [默认入口 / English](README.md)
 
-面向使用 **Azure Global** 的startup创始人、技术负责人、财务、Cloud Ops团队及其LLM Agent的平台知识参考库。22篇guide共用一套中文正文，英文README只是同步目录，不是另一套答案。
+面向使用 **Azure Global** 的startup创始人、技术负责人、财务、Cloud Ops团队及其LLM Agent的平台知识参考库。22篇guide共用一套中文正文，英文README只是同步目录，不是英文正文版本；不读中文的读者可使用支持翻译的Agent辅助阅读。
 
-> **一句用法：把README网址和问题交给Agent，让它选择1～3篇相关guide，根据结论、适用条件和来源回答。**
+> **一句用法：把README网址和问题交给Agent，让它读取1～3篇相关guide，按提问语言或你指定的语言回答，保留适用条件、未确认事项和来源链接。**
+
+翻译或按读者背景解释时，保留角色名、错误码和字段名的原文，必要术语首次出现就解释；不能把某个服务的例子变成整个Azure的通则。正文未回答的部分应明确说明缺口，不能用没有依据的断言补齐。
 
 ## 定位与边界
 
@@ -20,11 +22,11 @@
 
 | 治理层级 | Guide | 回答什么 | 完整URL |
 |---|---|---|---|
-| 基础 | [资源层级](guides/00-foundations/resource-hierarchy.md) | 租户、订阅、管理组和资源组分别管什么，如何定位实际范围。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-hierarchy.md |
+| 基础 | [资源层级](guides/00-foundations/resource-hierarchy.md) | 各容器分别管什么，哪些管理边界支持分组或拆分。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-hierarchy.md |
 | 基础 | [计费层级](guides/00-foundations/billing-hierarchy.md) | 实际协议下由谁付款、哪些计费对象和角色决定访问。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/billing-hierarchy.md |
 | 基础 | [资源提供程序注册](guides/00-foundations/resource-providers.md) | 注册报错究竟是登记、权限还是区域/接口不支持。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-providers.md |
 | Credits与计费 | [Credits](guides/01-credits-and-billing/credits.md) | 哪种权益、什么余额字段、哪些费用与到期条件适用。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/credits.md |
-| Credits与计费 | [购买与条款](guides/01-credits-and-billing/purchases-and-terms.md) | 谁接受/购买报价，采购与合同证据怎么区分。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/purchases-and-terms.md |
+| Credits与计费 | [购买与条款](guides/01-credits-and-billing/purchases-and-terms.md) | 谁接受/购买报价，合同文件和报告去哪里找、怎样核对适用。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/purchases-and-terms.md |
 | Credits与计费 | [发票](guides/01-credits-and-billing/invoices.md) | 开票范围、周期与用量明细如何解释应付金额。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/invoices.md |
 | Credits与计费 | [订阅与计费转移](guides/01-credits-and-billing/subscription-and-billing-transfer.md) | 换付款人、换身份目录与移动资源有哪些不同。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/subscription-and-billing-transfer.md |
 | 治理：身份 | [访问类型](guides/02-governance/identity/access-types.md) | 哪个调用身份、动作与授权范围解释本次访问拒绝。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/identity/access-types.md |
