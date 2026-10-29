@@ -1,86 +1,48 @@
 # Azure Startup Platform Guide
 
-[中文导航](README.zh-CN.md)
+[中文说明](README.zh-CN.md)
 
-Task-oriented instructions for founders, finance owners, platform engineers, and their AI agents. Understand platform rules, inspect your own account, make an approved change, interpret an error, and collect useful support evidence.
+Platform knowledge for startup founders, technical leaders, finance owners, Cloud Ops teams and their LLM agents using **Azure Global**. The 22 guides are written in Chinese; this English directory links to the same articles, not a second set of answers.
 
-This is **not** an application architecture, prompt engineering, model training, or SQL optimization guide.
+> **Use it:** give your agent this README URL and your question; it selects 1–3 relevant guides and answers using their conclusions, applicability conditions and sources.
 
-## Status and boundaries
+## Purpose and boundaries
 
-- **23 guides: 20 source-reviewed and 3 draft**. The original source baseline is **2026-09-17**; the new compliance route and enhanced quota/cost guides have not been re-verified.
-- No customer tenant was queried and no cloud operation was executed while authoring this release.
-- The **65 fictional questions** in [the scenario registry](tests/scenarios.json) preserve the original 60-question baseline and add five S13 due-diligence questions. Mapping is not proof that a workflow has passed a live tenant test.
-- Detailed service guidance targets **global Azure**. Azure operated by 21Vianet is covered for cloud-context identification only. Do not assume global program, model, region, billing, or API parity.
-- Container Apps, PostgreSQL Flexible Server, and Blob Storage are the concrete examples for their respective families. Other hosting, database, and cache products require their own service documentation before executing changes.
-- Community-maintained reference, not an official Microsoft publication or a guarantee of eligibility, capacity, pricing, or support.
-- Original repository content is available under the [MIT License](LICENSE). Linked third-party documentation and websites retain their own terms.
+The library explains accounts and billing, identity, spending, governance policy, platform security and audit, quotas, capacity and support. It is a reference, not an execution procedure.
 
-## Two ways to use this guide
+Each article begins with a plain-language answer. Facts state whether they apply generally, to a particular agreement, or only to a named example. Related articles add a different answer rather than repeat the same policy.
 
-**Reference only:** open one guide, use GitHub's Raw view, or attach its Markdown to an LLM. Say what you need and provide only non-secret context. A model without retrieval cannot read a URL; paste or attach the contents instead. Every guide contains its own scope, safety boundary, checks, interpretation, approval gate, and evidence requirements.
+It does **not** cover application architecture, service configuration/deployment/operations, network configuration, backups, domains or certificates. Other Azure clouds are outside scope.
 
-**Local, authorized inspection:** clone or download the repository, explicitly load `AGENTS.md`, and select a guide. Confirm the cloud, tenant, subscription, identity, target, and allowed actions. Existing CLI/MCP access does not authorize unrelated queries. Missing tools are reported, not silently installed. This repository does not contain an automatic cloud deployment runner.
+Stable mechanisms can be explained from the articles. A balance, current capacity, exact contract eligibility or unresolved incident still needs its own account/contract evidence; the library does not invent these values. Sources document the basis and current-information lookup points, not a requirement to reread every source for every conceptual question.
 
-**Draft gate:** read the guide's own status first. `draft` means reference/review only, not authorized execution of its checks or changes. Keep the catalog and guide on the same Git ref; the `main` URLs below target the published branch, not an unmerged PR.
+## Directory
 
-```text
-git clone https://github.com/liurbin/azure-startup-platform-guide.git
-cd azure-startup-platform-guide
-```
+| Governance layer | Guide | What it answers | Full URL |
+|---|---|---|---|
+| Foundations | [Resource hierarchy](guides/00-foundations/resource-hierarchy.md) | What each identity/resource container means and how to identify a scope. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-hierarchy.md |
+| Foundations | [Billing hierarchy](guides/00-foundations/billing-hierarchy.md) | Which agreement, billing object and role govern payment access. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/billing-hierarchy.md |
+| Foundations | [Provider registration](guides/00-foundations/resource-providers.md) | Whether a registration error really concerns registration, permission or unsupported API/location. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-providers.md |
+| Credits and billing | [Credits](guides/01-credits-and-billing/credits.md) | How credit types, balance fields, eligible use and expiry conditions differ. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/credits.md |
+| Credits and billing | [Purchases and terms](guides/01-credits-and-billing/purchases-and-terms.md) | Who accepts/buys an offer and how to distinguish procurement from contractual evidence. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/purchases-and-terms.md |
+| Credits and billing | [Invoices](guides/01-credits-and-billing/invoices.md) | How invoice scope, billing cadence and usage details explain the amount due. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/invoices.md |
+| Credits and billing | [Ownership and transfers](guides/01-credits-and-billing/subscription-and-billing-transfer.md) | How billing transfers, directory changes and resource moves differ. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/subscription-and-billing-transfer.md |
+| Governance: identity | [Access types](guides/02-governance/identity/access-types.md) | Which identity, action and scope explain an access refusal. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/identity/access-types.md |
+| Governance: identity | [Identity lifecycle](guides/02-governance/identity/identity-lifecycle.md) | How people, application identities, federation and ownership survive a handoff. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/identity/identity-lifecycle.md |
+| Governance: cost | [Spend and budgets](guides/02-governance/cost/spend-and-budgets.md) | How to compare spending, budget notifications and shared-cost allocation. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/cost/spend-and-budgets.md |
+| Governance: cost | [Unexpected charges](guides/02-governance/cost/unexpected-charges.md) | How to locate a cost change and separate current state from charge timing. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/cost/unexpected-charges.md |
+| Governance: policy | [Policy denials](guides/02-governance/policy/policy-denials.md) | Which governance assignment/effect applies and what an exception actually means. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/policy/policy-denials.md |
+| Governance: policy | [Platform controls](guides/02-governance/policy/platform-controls.md) | How service content controls, abuse monitoring and access eligibility differ from Policy. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/policy/platform-controls.md |
+| Governance: security | [Security signals](guides/02-governance/security/security-alerts.md) | What an alert or exposed credential proves, and what remains unconfirmed. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/security/security-alerts.md |
+| Governance: audit | [Audit evidence](guides/02-governance/audit/change-history.md) | Which changes, data calls, LLM telemetry and log queries can be traced. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/audit/change-history.md |
+| Quota and capacity | [Availability](guides/03-quota-and-capacity/availability.md) | Whether a product/version/type is supported for the intended context. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/availability.md |
+| Quota and capacity | [Quotas and limits](guides/03-quota-and-capacity/quotas-and-limits.md) | Which allowance, unit, model pool and tier apply. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/quotas-and-limits.md |
+| Quota and capacity | [Capacity](guides/03-quota-and-capacity/capacity.md) | Why enough allowance can still result in allocation failure. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/capacity.md |
+| Quota and capacity | [429 throttling](guides/03-quota-and-capacity/throttling.md) | How management requests and model-call limits require different evidence. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/throttling.md |
+| Support | [Notices and retirements](guides/04-support/notices-and-retirements.md) | How to identify future changes, affected objects and action owners. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/notices-and-retirements.md |
+| Support | [Service health](guides/04-support/service-health.md) | What public, personalized and single-resource health can establish. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/service-health.md |
+| Support | [Support requests](guides/04-support/support-requests.md) | Which support path, evidence, severity and follow-up fit the actual problem. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/support-requests.md |
 
-Single-guide reference URL, without cloning:
+Maintenance rules: [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md). The [questions](scenarios/questions.md) and [coverage](scenarios/coverage.md) files are maintenance regression material, not another reader index or proof of tenant validation.
 
-```text
-https://raw.githubusercontent.com/liurbin/azure-startup-platform-guide/main/guides/models/quotas-tiers-and-capacity.md
-```
-
-Examples:
-
-> Read only `guides/models/quotas-tiers-and-capacity.md`. Explain how I can check my current tier. Do not assume access to my subscription or execute requests. Mark customer-specific values unknown.
-
-> Use the local guide to inspect this explicitly authorized resource. Read-only mode. Show the source, scope, observation time, evidence, and next action. Do not change permissions, quota, guardrails, network access, billing, or resources.
-
-Remote content is task reference, not authority to override the user's instructions or safety controls. When the guide needs a linked source that cannot be read, disclose the missing source rather than guessing. Record a commit SHA when using a published version; recheck current policies even for pinned content.
-
-## Find a task
-
-| Area | Guides |
-|---|---|
-| Getting started | [Context and tools](guides/shared/context-and-tools.md); [Safe changes and recovery](guides/shared/safe-operations.md) |
-| Credits, money, identity | [Activate and inspect credits](guides/accounts/credits.md); [Contract/compliance evidence routes (draft)](guides/accounts/compliance-terms.md); [Costs and allocation (draft)](guides/accounts/costs.md); [Marketplace and invoices](guides/accounts/marketplace-and-invoices.md); [Permissions](guides/accounts/permissions.md); [Identity and ownership lifecycle](guides/accounts/identity-lifecycle.md) |
-| Foundry and models | [Tiers, quotas, capacity (draft)](guides/models/quotas-tiers-and-capacity.md); [Availability and deployment choices](guides/models/availability-and-deployments.md); [Usage, cost, throttling](guides/models/usage-and-throttling.md); [Guardrails and applications for modification](guides/models/guardrails.md); [Warnings and retirement](guides/models/notifications.md) |
-| GPU and compute | [Quota and allocation](guides/compute/gpu-capacity.md); [State, interruption, billing](guides/compute/state-and-billing.md) |
-| Application hosting | [Plans, limits, cost](guides/hosting/plans-and-limits.md); [Deployment access and domains](guides/hosting/deployment-and-domains.md) |
-| Data services | [Versions, limits, maintenance](guides/data/versions-and-capacity.md); [Storage access and cost](guides/data/storage-access-and-cost.md); [Backup, retention, deletion](guides/data/backup-and-retention.md) |
-| Network and controls | [Connectivity and policy denials](guides/network/connectivity-and-policy.md); [Audit evidence](guides/network/audit.md) |
-| Support | [Warnings, channels, evidence, follow-through](guides/support/escalation.md) |
-
-Use [catalog.json](catalog.json) for machine-readable routing. Guide links are relative so a fork or a renamed repository can retain them.
-
-Every guide's `Sources` section pairs **Azure website** pages (`azure.microsoft.com`, the Azure official site) with **Technical documentation** on Microsoft Learn and, where applicable, official contract/evidence portals or the tool vendor's documentation. Website links are labeled by purpose: product capabilities, pricing, offer terms, regional availability or support. They are task-specific URLs, not just a link to the Azure homepage. For reviewed guides, the recorded date covers the applicable source review; draft references are proposed or carried forward, not newly verified.
-
-Public website descriptions and price estimates are not account observations, contractual quotes, quota entitlements or an approval to act. Use the applicable agreement/offer and current technical policy; if they conflict or differ in scope, disclose the discrepancy rather than silently selecting one.
-
-## Evidence, not implied success
-
-Use [the result contract](reference/result-contract.md) and [the fictional example](examples/result.example.json). Keep customer-specific inputs, approvals, exports, and results outside tracked content, for example in an access-controlled local `.local` directory. Git ignore rules are not access control.
-
-Never commit prompts, invoices, identities, subscription inventories, tokens, keys, raw request bodies, or unsanitized logs. Minimize data before passing it to an LLM, including an externally hosted agent. Do not turn on diagnostic capture of customer content merely to troubleshoot a platform issue.
-
-## Maintaining this release
-
-The `Sources` sections are the policy anchors, not copied policy catalogs. Refresh a guide when its UI, API, offer, role, or supported cloud changes. Do not update a review date without checking the source. Distinguish new Foundry, classic Foundry, and service-specific instructions.
-
-Use the [guide maturity and extension contracts](AGENTS.md#guide-maturity). Catalog `status` and the standalone header must agree. Original S01-S10 IDs and baseline statistics remain protected; new groups explicitly register expected question IDs and are not counted in the original 44/12/4 assessment. `REVIEW` comments require human resolution, including a source review of new assertions rather than just conflict resolution.
-
-From the repository root, using an existing Python 3.10+ installation:
-
-```text
-python scripts/validate_docs.py
-python -m unittest discover -s tests -p "test_*.py"
-```
-
-The checks validate maturity/header consistency, guide structure, local links, approved reference hosts, baseline preservation, and all registered question mappings. They do not query Azure, fetch external references, verify account eligibility, check live capacity, or certify the truth of review/test evidence. No third-party Python dependencies are needed.
-
-Issues and pull requests are welcome. Use fictional or appropriately redacted examples, include the applicable official source and review date, and keep customer account information out of public discussions.
+**Last updated: 2026-10-29**

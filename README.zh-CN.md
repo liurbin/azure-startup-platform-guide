@@ -1,70 +1,48 @@
-# Azure Startup 云平台使用指南
+# Azure Startup Platform Guide
 
-[English index](README.md)
+[默认入口 / English](README.md)
 
-面向 startup 创始人、财务、平台工程师及其 AI Agent。范围是**云平台的政策、当前状态、开通配置、权限费用、限制告警与支持申请**，不包括应用架构、业务代码、提示词或模型训练方法。
+面向使用 **Azure Global** 的startup创始人、技术负责人、财务、Cloud Ops团队及其LLM Agent的平台知识参考库。22篇guide共用一套中文正文，英文README只是同步目录，不是另一套答案。
 
-## 这版已经包含什么
+> **一句用法：把README网址和问题交给Agent，让它选择1～3篇相关guide，根据结论、适用条件和来源回答。**
 
-23 篇任务指南，覆盖七类平台主题和两个共享主题。其中 20 篇保留 `source-reviewed`，合同查找路由、配额、费用三篇为 `draft`。英文正文便于国内外团队共用；每篇都能单独交给 LLM 阅读，不必先加载整仓库。
+## 定位与边界
 
-原有来源基线日期为 **2026-09-17**，不代表新增或改写的草稿已复核。**没有访问客户订阅，没有执行云部署或变更，也没有为本次整合重新获取外部政策页面。** 65 道虚构场景题包含原有 60 题和 S13 的 5 道合规尽调问题；题目映射不等于真实客户环境验证。
+覆盖账号与计费、身份、费用、治理策略、平台安全与审计、配额、容量和支持。这里解释机制与判断条件，不是Agent执行规程。
 
-仓库原创内容采用 [MIT 许可证](LICENSE)，欢迎复用、反馈和提交 PR。这里是社区整理的参考材料，不是 Microsoft 官方发布；所链接的官网和技术文档仍适用各自的条款。
+每篇第一屏先用白话回答；事实前明确标记“通用机制”“某种协议”或“具体示例”。相关篇只补另一部分答案，不反复复制同一条政策。
 
-## 按问题选入口
+不覆盖应用架构、具体服务的配置/部署/运维、网络配置、备份、域名与证书；其他Azure云环境不在范围内。
 
-| 想解决的问题 | 阅读 |
-|---|---|
-| 只给 LLM 链接怎么用；缺工具怎么办；登录了哪朵云、哪个租户和订阅；资源提供程序未注册 | [使用前准备](guides/shared/context-and-tools.md) |
-| Agent 如何检查已有资源、预览变更、等待确认；执行一半失败如何恢复和清理 | [平台变更规范](guides/shared/safe-operations.md) |
-| Credits 激活、绑定、余额、有效期和到期安排 | [Credits](guides/accounts/credits.md) |
-| BAA、DPA、区域附加条款和尽调材料去哪里找、交给谁判断 | [合规条款：DPA、BAA 与区域附加条款（草稿）](guides/accounts/compliance-terms.md) |
-| 消费、分摊、标签、预算告警与支出限制 | [费用管理（草稿）](guides/accounts/costs.md) |
-| Marketplace 购买和条款；账单与发票 | [商业开通与票据](guides/accounts/marketplace-and-invoices.md) |
-| 看账单、创建资源、调用模型分别需要什么权限 | [权限查询](guides/accounts/permissions.md) |
-| GitHub 短期身份、凭据轮换、人员离开、所有权交接 | [身份生命周期](guides/accounts/identity-lifecycle.md) |
-| 当前 Tier、升级策略、配额分配、余量和容量 | [模型配额（草稿）](guides/models/quotas-tiers-and-capacity.md) |
-| 当前可用模型、版本、区域、部署方式和数据处理位置 | [模型与部署选项](guides/models/availability-and-deployments.md) |
-| 当前模型费用、用量不一致、429、临时限流 | [用量与限流](guides/models/usage-and-throttling.md) |
-| 当前护栏、实际关联、护栏修改与滥用监控修改申请 | [护栏](guides/models/guardrails.md) |
-| 模型警告、退役、升级通知 | [模型通知](guides/models/notifications.md) |
-| GPU 规格、配额获批但机器分配失败 | [GPU 容量](guides/compute/gpu-capacity.md) |
-| VM 停止、解除分配、删除、维护、中断与残留费用 | [算力状态与计费](guides/compute/state-and-billing.md) |
-| 托管计划、实例上限、最低资源费用 | [托管限制](guides/hosting/plans-and-limits.md) |
-| 容器镜像拉取失败、域名与证书绑定 | [部署与访问](guides/hosting/deployment-and-domains.md) |
-| 数据库版本、规格、连接数、容量、维护 | [数据服务状态](guides/data/versions-and-capacity.md) |
-| 存储访问、请求限制和传输费用 | [存储管理](guides/data/storage-access-and-cost.md) |
-| 实际备份、恢复点、保留时间和删除后的保留项 | [备份与保留](guides/data/backup-and-retention.md) |
-| 私有端点、DNS、网络规则、组织策略拒绝 | [连接与策略](guides/network/connectivity-and-policy.md) |
-| 谁改了护栏、权限或公开访问；审计记录及保留 | [平台审计](guides/network/audit.md) |
-| 告警分流、支持资格、工单材料、申请后生效检查 | [支持交接](guides/support/escalation.md) |
+稳定机制可以直接从正文解释。余额、当时容量、客户协议资格和未明事故仍需实际账号或合同证据，不能虚构；来源用于追溯依据和查询动态信息，不要求每次概念问答都重读全部外部文档。
 
-## 使用方式与范围
+## 目录
 
-只参考：复制单篇正文或提供工具可读取的链接；没有环境访问权限时，当前状态必须写“未知”，不能引用文档默认值冒充客户实际值。
+| 治理层级 | Guide | 回答什么 | 完整URL |
+|---|---|---|---|
+| 基础 | [资源层级](guides/00-foundations/resource-hierarchy.md) | 租户、订阅、管理组和资源组分别管什么，如何定位实际范围。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-hierarchy.md |
+| 基础 | [计费层级](guides/00-foundations/billing-hierarchy.md) | 实际协议下由谁付款、哪些计费对象和角色决定访问。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/billing-hierarchy.md |
+| 基础 | [资源提供程序注册](guides/00-foundations/resource-providers.md) | 注册报错究竟是登记、权限还是区域/接口不支持。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-providers.md |
+| Credits与计费 | [Credits](guides/01-credits-and-billing/credits.md) | 哪种权益、什么余额字段、哪些费用与到期条件适用。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/credits.md |
+| Credits与计费 | [购买与条款](guides/01-credits-and-billing/purchases-and-terms.md) | 谁接受/购买报价，采购与合同证据怎么区分。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/purchases-and-terms.md |
+| Credits与计费 | [发票](guides/01-credits-and-billing/invoices.md) | 开票范围、周期与用量明细如何解释应付金额。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/invoices.md |
+| Credits与计费 | [订阅与计费转移](guides/01-credits-and-billing/subscription-and-billing-transfer.md) | 换付款人、换身份目录与移动资源有哪些不同。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/01-credits-and-billing/subscription-and-billing-transfer.md |
+| 治理：身份 | [访问类型](guides/02-governance/identity/access-types.md) | 哪个调用身份、动作与授权范围解释本次访问拒绝。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/identity/access-types.md |
+| 治理：身份 | [身份生命周期](guides/02-governance/identity/identity-lifecycle.md) | 人员、应用、托管身份与联合信任如何分类型交接。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/identity/identity-lifecycle.md |
+| 治理：成本 | [支出与预算](guides/02-governance/cost/spend-and-budgets.md) | 日常成本怎么比较，预算通知和共享分摊能做什么。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/cost/spend-and-budgets.md |
+| 治理：成本 | [异常费用](guides/02-governance/cost/unexpected-charges.md) | 从哪里定位上涨，怎样区分当前状态与计量时点。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/cost/unexpected-charges.md |
+| 治理：策略 | [Policy拒绝](guides/02-governance/policy/policy-denials.md) | 哪条治理规则生效，评估效果与例外是什么意思。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/policy/policy-denials.md |
+| 治理：策略 | [平台控制](guides/02-governance/policy/platform-controls.md) | 服务内容控制、滥用监控和功能准入为何不同于Policy。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/policy/platform-controls.md |
+| 治理：安全 | [安全告警](guides/02-governance/security/security-alerts.md) | 告警或凭据暴露能证明什么，哪些影响仍未确认。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/security/security-alerts.md |
+| 治理：审计 | [变更与审计证据](guides/02-governance/audit/change-history.md) | 管理变更、数据调用、LLM遥测和日志查询分别能追踪什么。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/02-governance/audit/change-history.md |
+| 配额与容量 | [可用性](guides/03-quota-and-capacity/availability.md) | 实际上下文是否支持目标产品、版本和类型组合。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/availability.md |
+| 配额与容量 | [配额与限制](guides/03-quota-and-capacity/quotas-and-limits.md) | 允许量、单位、模型共享池和等级怎么区分。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/quotas-and-limits.md |
+| 配额与容量 | [实时容量](guides/03-quota-and-capacity/capacity.md) | 为什么允许量足够，创建或扩张时仍分配失败。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/capacity.md |
+| 配额与容量 | [429限流](guides/03-quota-and-capacity/throttling.md) | 管理API和模型请求为什么需要不同的限流判断证据。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/03-quota-and-capacity/throttling.md |
+| 支持 | [通知与退役](guides/04-support/notices-and-retirements.md) | 未来哪些变更影响谁，谁应在何时行动。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/notices-and-retirements.md |
+| 支持 | [服务健康](guides/04-support/service-health.md) | 公开、个性化和单资源健康各能说明什么。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/service-health.md |
+| 支持 | [支持请求](guides/04-support/support-requests.md) | 实际问题应选什么支持路径、证据、严重度及跟进方式。 | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/support-requests.md |
 
-本地使用：显式加载 `AGENTS.md`，确认身份、云环境、租户、订阅和授权范围，再按具体模块只读检查。修改计费、权限、护栏、网络或资源前，必须取得本次操作的明确批准。
+维护规范见[AGENTS.md](AGENTS.md)与[CLAUDE.md](CLAUDE.md)。[问题集](scenarios/questions.md)和[覆盖表](scenarios/coverage.md)只供维护回归，不是第二套读者索引，也不证明真实租户验证。
 
-**草稿限制优先：** `draft` 只能参考和审阅，不能执行其中的检查或变更。即使 Agent 已有账号权限也不例外。目录和正文应来自同一 Git 分支或提交；下面的 `main` 示例指向已发布分支，不代表尚未合并的 PR。
-
-```text
-git clone https://github.com/liurbin/azure-startup-platform-guide.git
-cd azure-startup-platform-guide
-```
-
-不拉取仓库时，可以直接把单篇 Raw 地址交给支持联网读取的 Agent，例如：
-
-```text
-https://raw.githubusercontent.com/liurbin/azure-startup-platform-guide/main/guides/models/quotas-tiers-and-capacity.md
-```
-
-首版详细操作面向全球 Azure。世纪互联环境目前只覆盖环境识别和路由，不推断其服务、权益或模型与全球版相同。托管、数据库和存储的具体例子分别是 Container Apps、PostgreSQL Flexible Server 和 Blob Storage，不冒充覆盖所有产品。
-
-每篇遵循：适用范围 → 官方政策与客户状态 → 只读检查 → 解读与分支 → 修改及审批 → 验证和交接。可机器读取的目录见 [catalog.json](catalog.json)，65 道题见 [tests/scenarios.json](tests/scenarios.json)。
-
-每篇末尾的 `Sources` 都保留 **Azure website（Azure 官网）** 和 **Technical documentation（操作文档）**，合规路由还列出官方合同和证据门户。官网页面标注产品、定价、Offer 条款、区域可用性或支持入口的用途。已复核内容以各篇日期为准；草稿中的旧来源和新增候选链接不等于本次已经复核。
-
-官网公开价格不等于客户账单，产品介绍不等于当前订阅的资格或配额。出现官网、技术文档与客户实际协议适用范围不一致时，必须明确说明并核实，不能自行选择有利的解释。
-
-文档成熟度与一次操作的结果状态分开定义，见 [AGENTS.md](AGENTS.md#guide-maturity)。原有 S01-S10 的 60 题及 44/12/4 历史统计保留；新题组显式登记题号，新题不反向混入旧统计。校验只检查结构、状态和映射，不代替人工核实政策或真实租户测试。
+**最后更新：2026-10-29**
