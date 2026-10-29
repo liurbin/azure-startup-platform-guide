@@ -2,7 +2,7 @@
 
 [中文说明](README.zh-CN.md)
 
-Platform knowledge for startup founders, technical leaders, finance owners, Cloud Ops teams and their LLM agents using **Azure Global**. The 22 guides are written in Chinese; this English directory links to the same articles, not an English article edition. Readers who do not read Chinese can use an agent that supports translation.
+Platform knowledge for startup founders, technical leaders, finance owners, Cloud Ops teams and their LLM agents using **Azure Global**. The 22 knowledge guides are written in Chinese; this English directory links to those same articles. Readers who do not read Chinese can use an agent that supports translation. Routine Baseline Audit is a peer category with separate Chinese and English instructions.
 
 > **Use it:** give your agent this README URL and your question, ask it to read 1–3 relevant guides and answer in your question's language (or a language you specify), preserving applicability conditions, uncertainty and source links.
 
@@ -10,17 +10,17 @@ When translating or adapting an explanation, keep exact role names, error codes 
 
 ## Purpose and boundaries
 
-The library explains accounts and billing, identity, spending, governance policy, platform security and audit, quotas, capacity and support. It is a reference, not an execution procedure.
+The knowledge guides explain accounts and billing, identity, spending, governance policy, platform security and audit, quotas, capacity and support. They are references, not execution procedures. The Routine Baseline Audit category provides a high-level, read-only instruction for the user's own agent, not data connectors, scheduling or automated remediation.
 
-Each article begins with a plain-language answer. Facts state whether they apply generally, to a particular agreement, or only to a named example. Related articles add a different answer rather than repeat the same policy.
+Each knowledge guide begins with a plain-language answer. Facts state whether they apply generally, to a particular agreement, or only to a named example. Related articles add a different answer rather than repeat the same policy.
 
-It does **not** cover application architecture, service configuration/deployment/operations, network configuration, backups, domains or certificates. Other Azure clouds are outside scope.
+The knowledge guides do **not** cover application architecture, service configuration/deployment/operations, network configuration, backups, domains or certificates. The audit instruction can flag applicable risks in areas such as networking, hosts and backups, but provides no implementation procedures and does not claim that these areas are covered by the knowledge articles. Other Azure clouds are outside scope.
 
 Stable mechanisms can be explained from the articles. A balance, current capacity, exact contract eligibility or unresolved incident still needs its own account/contract evidence; the library does not invent these values. Sources document the basis and current-information lookup points, not a requirement to reread every source for every conceptual question.
 
 ## Directory
 
-| Governance layer | Guide | What it answers | Full URL |
+| Category | Guide | What it answers | Full URL |
 |---|---|---|---|
 | Foundations | [Resource hierarchy](guides/00-foundations/resource-hierarchy.md) | What each container means and which management boundaries justify grouping or splitting. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/resource-hierarchy.md |
 | Foundations | [Billing hierarchy](guides/00-foundations/billing-hierarchy.md) | Which agreement, billing object and role govern payment access. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/00-foundations/billing-hierarchy.md |
@@ -44,6 +44,7 @@ Stable mechanisms can be explained from the articles. A balance, current capacit
 | Support | [Notices and retirements](guides/04-support/notices-and-retirements.md) | How to identify future changes, affected objects and action owners. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/notices-and-retirements.md |
 | Support | [Service health](guides/04-support/service-health.md) | What public, personalized and single-resource health can establish. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/service-health.md |
 | Support | [Support requests](guides/04-support/support-requests.md) | Which support path, evidence, severity and follow-up fit the actual problem. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/04-support/support-requests.md |
+| Routine Baseline Audit | [Azure routine baseline audit](guides/05-routine-baseline-audit/azure-baseline-audit.en.md) | What an agent should periodically check across security, spending, and errors and warnings, with evidence and read-only boundaries. | https://github.com/liurbin/azure-startup-platform-guide/blob/main/guides/05-routine-baseline-audit/azure-baseline-audit.en.md |
 
 Maintenance rules: [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md). The [questions](scenarios/questions.md) and [coverage](scenarios/coverage.md) files are maintenance regression material, not another reader index or proof of tenant validation.
 
